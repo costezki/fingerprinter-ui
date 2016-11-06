@@ -1,0 +1,24 @@
+extends ../node_modules/pug-bootstrap/_bootstrap.pug
+
+append styles
+    title= "RDF Fingerprinter"
+    //link(rel='stylesheet', href='/jade-bootstrap/css/sticky-footer-navbar.css')
+    //link(rel='stylesheet', href='/jade-bootstrap/css/navbar-.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+    script(type="text/javascript", src="/jquery/dist/jquery.js")
+    script(type="text/javascript", src="/bootstrap-filestyle/src/bootstrap-filestyle.js")
+block body
+    block header
+        +navbar(title,"navbar")
+
+    .container
+        block content
+            p.text-center some content goes here
+
+    block footer
+        -year= new Date().getFullYear();
+        footer.footer
+            .container
+                p.text-muted.text-center &copy; Eugeniu Costetchi #{year}

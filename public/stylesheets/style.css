@@ -1,0 +1,22 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    height: 100%;
+    background-color: #91b8d2;
+}
+
+.panel > .panel-heading {
+    background: #337ab7 none;
+    border-color: #2e6da4;
+    color: white;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.code {
+    font-family: Consolas, Lucida Console, monospace;
+    font-size: larger;
+    text-align: left;
+}

@@ -1,0 +1,34 @@
+\contentsline {section}{\numberline {1}What do data say about fingerprint.rq\_eurovoc44.log dataset}{2}
+\contentsline {subsection}{\numberline {1.1}Class instantiation overview for fingerprint.rq\_eurovoc44.log dataset}{2}
+\contentsline {subsection}{\numberline {1.2}Application profile reconstruction for fingerprint.rq\_eurovoc44.log dataset}{2}
+\contentsline {subsubsection}{\numberline {1.2.1}Estimated Application Profile for evo:CompoundEquivalence class}{2}
+\contentsline {subsubsection}{\numberline {1.2.2}Estimated Application Profile for evo:CompoundNonPreferredTerm class}{2}
+\contentsline {subsubsection}{\numberline {1.2.3}Estimated Application Profile for evo:Country class}{3}
+\contentsline {subsubsection}{\numberline {1.2.4}Estimated Application Profile for evo:Domain class}{3}
+\contentsline {subsubsection}{\numberline {1.2.5}Estimated Application Profile for evo:EquivalenceRelationship class}{3}
+\contentsline {subsubsection}{\numberline {1.2.6}Estimated Application Profile for evo:Export class}{3}
+\contentsline {subsubsection}{\numberline {1.2.7}Estimated Application Profile for evo:Language class}{3}
+\contentsline {subsubsection}{\numberline {1.2.8}Estimated Application Profile for evo:MicroThesaurus class}{4}
+\contentsline {subsubsection}{\numberline {1.2.9}Estimated Application Profile for evo:PreferredTerm class}{4}
+\contentsline {subsubsection}{\numberline {1.2.10}Estimated Application Profile for evo:SimpleNonPreferredTerm class}{4}
+\contentsline {subsubsection}{\numberline {1.2.11}Estimated Application Profile for evo:Thesaurus class}{5}
+\contentsline {subsubsection}{\numberline {1.2.12}Estimated Application Profile for evo:ThesaurusConcept class}{5}
+\contentsline {subsubsection}{\numberline {1.2.13}Estimated Application Profile for skos:Concept class}{5}
+\contentsline {subsubsection}{\numberline {1.2.14}Estimated Application Profile for skos:ConceptScheme class}{6}
+\contentsline {subsubsection}{\numberline {1.2.15}Estimated Application Profile for skoxl:Label class}{6}
+\contentsline {subsection}{\numberline {1.3}Property usage statistics for fingerprint.rq\_eurovoc44.log dataset}{6}
+\contentsline {subsubsection}{\numberline {1.3.1}Propoerty statistics for evo:CompoundEquivalence class}{7}
+\contentsline {subsubsection}{\numberline {1.3.2}Propoerty statistics for evo:CompoundNonPreferredTerm class}{7}
+\contentsline {subsubsection}{\numberline {1.3.3}Propoerty statistics for evo:Country class}{7}
+\contentsline {subsubsection}{\numberline {1.3.4}Propoerty statistics for evo:Domain class}{7}
+\contentsline {subsubsection}{\numberline {1.3.5}Propoerty statistics for evo:EquivalenceRelationship class}{7}
+\contentsline {subsubsection}{\numberline {1.3.6}Propoerty statistics for evo:Export class}{8}
+\contentsline {subsubsection}{\numberline {1.3.7}Propoerty statistics for evo:Language class}{8}
+\contentsline {subsubsection}{\numberline {1.3.8}Propoerty statistics for evo:MicroThesaurus class}{8}
+\contentsline {subsubsection}{\numberline {1.3.9}Propoerty statistics for evo:PreferredTerm class}{8}
+\contentsline {subsubsection}{\numberline {1.3.10}Propoerty statistics for evo:SimpleNonPreferredTerm class}{8}
+\contentsline {subsubsection}{\numberline {1.3.11}Propoerty statistics for evo:Thesaurus class}{9}
+\contentsline {subsubsection}{\numberline {1.3.12}Propoerty statistics for evo:ThesaurusConcept class}{9}
+\contentsline {subsubsection}{\numberline {1.3.13}Propoerty statistics for skos:Concept class}{9}
+\contentsline {subsubsection}{\numberline {1.3.14}Propoerty statistics for skos:ConceptScheme class}{10}
+\contentsline {subsubsection}{\numberline {1.3.15}Propoerty statistics for skoxl:Label class}{10}
