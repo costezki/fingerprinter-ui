@@ -58,4 +58,35 @@ router.post('/stats-upload', function (req, res) {
     // res.send("something");
 });
 
+
+// var pyOptions_stats = {
+//     mode: 'text',
+//     pythonOptions: ['-u'],
+//     scriptPath: './',
+//     args: ['stats','reports/stats','./uploads/fingerprint.rq_eurovoc44.csv', 'some dataset description', 'uploads/prefix.csv']
+// };
+//
+//
+// PythonShell.run('./pysrc/RDF-fingerprint-diff/fingerprint/triple_profiler.py', pyOptions_stats, function (err, results) {
+//     if (err) throw err;
+//     // results is an array consisting of messages collected during execution
+//     console.log('results: %j', results);
+// });
+
+
+// py_scr = child_process.spawn('python', ['./pysrc/RDF-fingerprint-diff/fingerprint/triple_profiler.py',
+//     'diff', './uploads/fingerprint.rq_eurovoc44.csv', './uploads/config.json']);
+//
+// py_scr.stdout.on('data', function (data) {
+//     console.log('stdout: ' + data);
+// });
+//
+// py_scr.stderr.on('data', function (data) {
+//     console.log('stderr: ' + data);
+// });
+//
+// py_scr.on('close', function (code) {
+//     console.log('child process exited with code ' + code);
+// });
+
 module.exports = router;

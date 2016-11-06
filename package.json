@@ -16,8 +16,6 @@
     "font-awesome": "^4.7.0",
     "formidable": "^1.0.17",
     "highlight.js": "^9.8.0",
-    "jade": "^1.11.0",
-    "jade-bootstrap": "^1.0.9",
     "jquery": "^3.1.1",
     "morgan": "~1.7.0",
     "pug": "^2.0.0-beta6",
