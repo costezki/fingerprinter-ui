@@ -68,12 +68,12 @@ app.use('/', upload);
 
 // solution of exposing static folders
 // http://stackoverflow.com/questions/27464168/how-to-include-scripts-located-inside-the-node-modules-folder
-//
+
 app.use('/font-awesome', express.static(__dirname + '/node_modules/font-awesome/'));
 app.use('/jade-bootstrap', express.static(__dirname + '/node_modules/jade-bootstrap/'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
 app.use('/bootstrap-filestyle', express.static(__dirname + '/node_modules/bootstrap-filestyle/'));
-// app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
+app.use('/fs', express.static(__dirname + '/node_modules/fs/'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -27,16 +27,18 @@ router.post('/stats-upload', function (req, res) {
     // specify that we want to allow the user to upload multiple files in a single request
     // form.multiples = true;
     // store all uploads in the /uploads directory
-    form.uploadDir = path.join(__dirname, '/uploads');
+    form.uploadDir = path.join(__dirname, '../uploads');
 
     console.log("enetring status upload");
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
     form.on('file', function (field, file) {
         console.log("receiving a file");
-        fs.rename(file.path, path.join(form.uploadDir, file.name));
+        // fs.rename(file.path, path.join(form.uploadDir, file.name));
     });
     form.on('field', function (name, value) {
+        console.log("received field - " + name + ":" + value);
+        console.log("received field - " + name + ":" + value);
         console.log("received field - " + name + ":" + value);
     });
     // log any errors that occur
@@ -48,7 +50,7 @@ router.post('/stats-upload', function (req, res) {
         res.end('success');
     });
     // parse the incoming request containing the form data
-    form.parse(req, function(err, fields, files) {
+    form.parse(req, function (err, fields, files) {
         console.log("parsing request");
         console.log(err);
         console.log(fields);
@@ -57,7 +59,6 @@ router.post('/stats-upload', function (req, res) {
 
     // res.send("something");
 });
-
 
 // var pyOptions_stats = {
 //     mode: 'text',

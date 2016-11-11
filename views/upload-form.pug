@@ -8,17 +8,16 @@ block content
                     +progress-bar('0')
                     fieldset
                         //legend Report
-                        +input('text', "config[title]", config.title, 'Report title', 'config[title]')
-                        +input('text', "config[author]", config.author, 'Report author', 'config[author]')
-                        +input('text', "config[description]", config.description, 'Report dataset description', 'config[description]')
+                        +input('text', "stats-title", config.title, 'Report title', 'config[title]')
+                        +input('text', "stats-author", config.author, 'Report author', 'config[author]')
+                        +input('text', "stats-description", config.description, 'Report dataset description', 'config[description]')
                         .form-group
                             label(for="") CSV file (result set of the SPARQL query)
                             input.filestyle.form-control(type='file' id=''  data-buttonName="btn-primary" data-placeholder="No file"
-                                        data-buttonText="Select File")
+                            data-buttonText="Select File")
                     p.buttons.text-center
                         button.btn.btn-primary(type='button' id='generate' ) Generate report
                         //input.btn.btn-primary(type='submit' id='generate' value='Generate report')
                         //+submit-primary('Generate report')
                         //input(type="submit", value="Save")
-
     script(type="text/javascript", src="/javascripts/upload.js")
