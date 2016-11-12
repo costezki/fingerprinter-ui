@@ -6,14 +6,22 @@ block content
             +panel-primary("Descriptive statistical report ")
                 form(method="post" id='stats-form')
                     +progress-bar('0')
+                    .alert.alert-info(role='alert', hidden=false)
+                        button.close(type='button', data-dismiss="alert", aria-label="Close")
+                            span &times;
+                        |The Report is available at this
+                        a.alert-link(id="report-link",href='#')  link
+                        |.
                     fieldset
                         //legend Report
                         +input('text', "stats-title", config.title, 'Report title', 'config[title]')
                         +input('text', "stats-author", config.author, 'Report author', 'config[author]')
-                        +input('text', "stats-description", config.description, 'Report dataset description', 'config[description]')
+                        +input('text', "stats-description", config.description, 'Report description', 'config[description]')
+                        +input('text', "stats-alpha-title", config.alpha.title, 'Dataset name', 'config[alpha][title]')
+                        +input('text', "stats-alpha-description", config.alpha.description, 'Dataset description', 'config[alpha][description]')
                         .form-group
-                            label(for="") CSV file (result set of the SPARQL query)
-                            input.filestyle.form-control(type='file' id=''  data-buttonName="btn-primary" data-placeholder="No file"
+                            label(for="stats-alpha") CSV file (result set of the SPARQL query)
+                            input.filestyle.form-control(type='file' id='stats-alpha'  data-buttonName="btn-primary" data-placeholder="No file"
                             data-buttonText="Select File")
                     p.buttons.text-center
                         button.btn.btn-primary(type='button' id='generate' ) Generate report

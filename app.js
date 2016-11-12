@@ -34,37 +34,11 @@ app.use(cookieParser());
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'reports')));
 
 app.use('/', index);
 app.use('/', upload);
 
-// app.post('/stats-upload', function (req, res) {
-//     // create an incoming form object
-//     var form = new formidable.IncomingForm();
-//     // specify that we want to allow the user to upload multiple files in a single request
-//     form.multiples = true;
-//     // store all uploads in the /uploads directory
-//     form.uploadDir = path.join(__dirname, '/uploads');
-//     // every time a file has been uploaded successfully,
-//     // rename it to it's orignal name
-//     form.on('file', function (field, file) {
-//         console.log(file);
-//         fs.rename(file.path, path.join(form.uploadDir, file.name));
-//     });
-//     form.on('field', function (name, value) {
-//         console.log(name + ":" + value);
-//     });
-//     // log any errors that occur
-//     form.on('error', function (err) {
-//         console.log('An error has occured: \n' + err);
-//     });
-//     // once all the files have been uploaded, send a response to the client
-//     form.on('end', function () {
-//         res.end('success');
-//     });
-//     // parse the incoming request containing the form data
-//     form.parse(req);
-// });
 
 // solution of exposing static folders
 // http://stackoverflow.com/questions/27464168/how-to-include-scripts-located-inside-the-node-modules-folder
@@ -73,7 +47,7 @@ app.use('/font-awesome', express.static(__dirname + '/node_modules/font-awesome/
 app.use('/jade-bootstrap', express.static(__dirname + '/node_modules/jade-bootstrap/'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
 app.use('/bootstrap-filestyle', express.static(__dirname + '/node_modules/bootstrap-filestyle/'));
-app.use('/fs', express.static(__dirname + '/node_modules/fs/'));
+// app.use('/fs', express.static(__dirname + '/node_modules/fs/'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
