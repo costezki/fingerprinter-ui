@@ -5,13 +5,25 @@ block content
         .col-md-12
             +panel-primary("Descriptive statistical report ")
                 form(method="post" id='stats-form')
-                    +progress-bar('0')
-                    .alert.alert-info(role='alert', hidden=false)
+                    //progress bar
+                    .progress
+                        .progress-bar.progress-bar-striped.active(id="stats-progress",role='progressbar', aria-valuenow=value, aria-valuemin='0', aria-valuemax='100', style='width: 0%')
+                            span.sr-only 0% Complete
+                    //the result
+                    .alert.alert-dismissible.alert-info(id="info-bubble",role='alert', hidden=true)
+                        +icon("info-sign")
                         button.close(type='button', data-dismiss="alert", aria-label="Close")
                             span &times;
-                        |The Report is available at this
-                        a.alert-link(id="report-link",href='#')  link
-                        |.
+                        | The Report is available at this
+                        a.alert-link(id="report-link", href='#', target="_blank")  link
+                        | .
+
+                    .alert.alert-dismissible.alert-danger(id="error-bubble",role='alert', hidden=true)
+                        +icon("remove-sign")
+                        button.close(type="button",data-dismiss="alert" aria-label="Close")
+                            span(aria-hidden="true")  &times;
+                        | There was an error while processing your request, please try again.
+
                     fieldset
                         //legend Report
                         +input('text', "stats-title", config.title, 'Report title', 'config[title]')

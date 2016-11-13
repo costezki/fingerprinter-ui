@@ -74,7 +74,9 @@ router.post('/stats-upload', function (req, res) {
         // writing the received data form to file
         fs.writeFile(jsonFn, JSON.stringify(outputJs, null, 4), function (err) {
             if (err) {
-                throw new err;
+                // throw new err;
+                console.log(err);
+                res.end('/reports/');
             } else {
                 console.log("JSON saved to " + jsonFn);
                 // calling the script only when the file is there

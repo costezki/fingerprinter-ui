@@ -1,62 +1,19 @@
-$('.upload-btn').on('click', function () {
-    console.log("click");
-    $('#upload-input').click();
-    $('.progress-bar').text('0%');
-    $('.progress-bar').width('0%');
+/**
+ * Select all .alert .close buttons and setting them to hide their parent (i.e. the info/error bubble)
+ * rather than removing the info/error bubble from the DOM.
+ */
+$('.alert .close').on('click', function (e) {
+    $(this).parent().hide();
 });
 
-$('#upload-input').on('change', function () {
-
-    var files = $(this).get(0).files;
-
-    if (files.length > 0) {
-        // create a FormData object which will be sent as the data payload in the
-        // AJAX request
-        var formData = new FormData();
-
-        // loop through all the selected files and add them to the formData object
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-
-            // add the files to formData object for the data payload
-            formData.append('uploads[]', file, file.name);
-        }
-
-        $.ajax({
-            url: '/upload',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                console.log('upload successful!\n' + data);
-            },
-            xhr: function () {
-                // create an XMLHttpRequest
-                var xhr = new XMLHttpRequest();
-
-                // listen to the 'progress' event
-                xhr.upload.addEventListener('progress', function (evt) {
-                    if (evt.lengthComputable) {
-                        // calculate the percentage of upload completed
-                        var percentComplete = evt.loaded / evt.total;
-                        percentComplete = parseInt(percentComplete * 100);
-
-                        // update the Bootstrap progress bar with the new percentage
-                        $('.progress-bar').text(percentComplete + '%');
-                        $('.progress-bar').width(percentComplete + '%');
-
-                        // once the upload reaches 100%, set the progress bar text to done
-                        if (percentComplete === 100) {
-                            $('.progress-bar').html('Done');
-                        }
-                    }
-                }, false);
-                return xhr;
-            }
-        });
-    }
-});
+/**
+ * eneble or disable all elements of a form
+ * @param form
+ * @param enabled
+ */
+function enableForm(form, enabled) {
+    $(form + " :input").attr("disabled", !enabled);
+}
 
 /**
  * Get data inputs: title, author, description and file
@@ -64,9 +21,11 @@ $('#upload-input').on('change', function () {
  */
 
 $('#generate').on('click', function () {
-    console.log("click");
     $('.progress-bar').text('0%');
     $('.progress-bar').width('0%');
+    enableForm("#stats-form", false);
+    $('#error-bubble').hide();
+    $('#info-bubble').hide();
 
     //select all possible files
     var selectedFile = $("#stats-alpha").get(0).files;
@@ -92,28 +51,41 @@ $('#generate').on('click', function () {
     formData.append("alpha-title", $("#stats-alpha-title").val());
     formData.append("alpha-description", $("#stats-alpha-description").val());
 
-
     // Send formData to the server
     $.ajax({
         url: "/stats-upload",
         type: "POST",
         data: formData,
-        dataType: 'json', // expecting JSON to be returned
+        dataType: 'text', // expecting text to be returned
         processData: false,
         contentType: false,
-        timeout: 30000,
+        timeout: 60000,
         success: function (result) {
-            console.log(result);
-            // if(result.status == 200){
-            //     console.log("Data successfully received, running transformation tool now.");
-            // }
+            console.log("Success");
             $('.progress-bar').text('100%');
             $('.progress-bar').width('100%');
-            $('#report-link').attr('href', result['responseText']);
+
+            $('#report-link').attr('href', result);
+            $('#info-bubble').show();
+            $('#error-bubble').hide();
+
+            enableForm("#stats-form", true);
+
+            setTimeout(function () {
+                $('.progress-bar').text("0%");
+                $('.progress-bar').width("0%");
+            }, 20000); // wait for 20 seconds before resenting the progress bar to zero
         },
         error: function (result) {
-            console.log(result);
+            console.log("Error:" + result);
+            enableForm("#stats-form", true);
+            $('#error-bubble').show();
+            $('#info-bubble').hide();
         }
     });
 
+    //assume that the the server response will not come sooner than 800 mx and
+    // speculate a small progress on the progress bar
+    $('.progress-bar').delay(800).text('15%');
+    $('.progress-bar').delay(800).width('15%');
 });
