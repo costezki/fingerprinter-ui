@@ -1,5 +1,5 @@
 /**
- * Created by lps on 06.11.16.
+ * Created by IV on 11/14/16.
  */
 var uuid = require('node-uuid');
 var path = require('path');
@@ -10,8 +10,8 @@ var router = express.Router();
 var PythonShell = require('python-shell');
 
 /* GET home page. */
-router.get('/stats', function (req, res) {
-    res.render('upload-form', {
+router.get('/diff', function (req, res) {
+    res.render('diff-form', {
         title: 'RDF Fingerprinter',
         config: {
             title: "Data-set Fingerprint Report - Application Profile and Descriptive Statistics",
@@ -28,7 +28,7 @@ router.get('/stats', function (req, res) {
 /**
  * handling POST AJAX calls.
  */
-router.post('/stats-upload', function (req, res) {
+router.post('/diff-upload', function (req, res) {
     // create an incoming form object
     var form = new formidable.IncomingForm();
     // specify that we want to allow the user to upload multiple files in a single request
@@ -70,6 +70,11 @@ router.post('/stats-upload', function (req, res) {
         outputJs['output'] = path.join(__dirname, '../reports/report_' + uuid.v4());
         outputJs['alpha']['title'] = fields['alpha-title'];
         outputJs['alpha']['description'] = fields['alpha-description'];
+        outputJs['ns_file'] = path.join(__dirname, '../resources/prefix.csv');
+        outputJs['beta'] = {'file': files['beta']};
+        outputJs['output'] = path.join(__dirname, '../reports/report_' + uuid.v4());
+        outputJs['beta']['title'] = fields['beta-title'];
+        outputJs['beta']['description'] = fields['beta-description'];
         outputJs['ns_file'] = path.join(__dirname, '../resources/prefix.csv');
         // writing the received data form to file
         fs.writeFile(jsonFn, JSON.stringify(outputJs, null, 4), function (err) {
