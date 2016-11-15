@@ -12,7 +12,13 @@ $('.alert .close').on('click', function (e) {
  * @param enabled
  */
 function enableForm(form, enabled) {
-    $(form + " :input").attr("disabled", !enabled);
+    var receivedForm = $("#" + form).find('input[type="text"]');
+
+    for (var d = 0; d < receivedForm.length; d++) {
+        if (receivedForm[d].name != "") {
+            receivedForm[d].disabled = enabled;
+        }
+    }
 }
 
 /**
@@ -21,9 +27,10 @@ function enableForm(form, enabled) {
  */
 
 $('#generate-stats').on('click', function () {
+    enableForm("stats-form", true);
+
     $('.progress-bar').text('0%');
     $('.progress-bar').width('0%');
-    enableForm("#stats-form", false);
     $('#error-bubble').hide();
     $('#info-bubble').hide();
 
@@ -70,11 +77,12 @@ $('#generate-stats').on('click', function () {
             $('#info-bubble').show();
             $('#error-bubble').hide();
 
-            enableForm("#stats-form", true);
 
             setTimeout(function () {
                 $('.progress-bar').text("0%");
                 $('.progress-bar').width("0%");
+
+                enableForm("stats-form", false);
             }, 20000); // wait for 20 seconds before resenting the progress bar to zero
         },
         error: function (result) {
@@ -92,9 +100,10 @@ $('#generate-stats').on('click', function () {
 });
 
 $('#generate-diff').on('click', function () {
+    enableForm("diff-form", true);
+
     $('.progress-bar').text('0%');
     $('.progress-bar').width('0%');
-    enableForm("#stats-form", false);
     $('#error-bubble').hide();
     $('#info-bubble').hide();
 
@@ -153,11 +162,12 @@ $('#generate-diff').on('click', function () {
             $('#info-bubble').show();
             $('#error-bubble').hide();
 
-            enableForm("#stats-form", true);
 
             setTimeout(function () {
                 $('.progress-bar').text("0%");
                 $('.progress-bar').width("0%");
+
+                enableForm("diff-form", false);
             }, 20000); // wait for 20 seconds before resenting the progress bar to zero
         },
         error: function (result) {
@@ -172,4 +182,5 @@ $('#generate-diff').on('click', function () {
     // speculate a small progress on the progress bar
     $('.progress-bar').delay(800).text('15%');
     $('.progress-bar').delay(800).width('15%');
+
 });
