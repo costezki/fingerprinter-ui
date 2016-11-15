@@ -18,7 +18,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 //
 var index = require('./routes/index');
-var upload = require('./routes/upload-form');
+var stats = require('./routes/stats-form');
 var diff = require('./routes/diff-form');
 
 var app = express();
@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'reports')));
 
 app.use('/', index);
-app.use('/', upload);
+app.use('/', stats);
 app.use('/', diff);
 
 // solution of exposing static folders

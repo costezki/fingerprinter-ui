@@ -42,7 +42,7 @@ $('#generate-stats').on('click', function () {
     var formData = new FormData();
 
     if (selectedFile.length > 0) {
-        // One or more files selected, process the file upload
+        // One or more files selected, process the file stats
         // loop through all the selected files
         for (var i = 0; i < selectedFile.length; i++) {
             var file = selectedFile[i];
@@ -61,7 +61,7 @@ $('#generate-stats').on('click', function () {
 
     // Send formData to the server
     $.ajax({
-        url: "/stats-upload",
+        url: "/stats-stats",
         type: "POST",
         data: formData,
         dataType: 'text', // expecting text to be returned
@@ -116,7 +116,7 @@ $('#generate-diff').on('click', function () {
     var formData = new FormData();
 
     if (selectedAlphaFile.length > 0) {
-        // One or more files selected, process the file upload
+        // One or more files selected, process the file stats
         // loop through all the selected files
         for (var i = 0; i < selectedAlphaFile.length; i++) {
             // add the files to formData object for the data payload
@@ -125,7 +125,7 @@ $('#generate-diff').on('click', function () {
     }
 
     if (selectedBetaFile.length > 0) {
-        // One or more files selected, process the file upload
+        // One or more files selected, process the file stats
         // loop through all the selected files
         for (var s = 0; s < selectedBetaFile.length; s++) {
             // add the files to formData object for the data payload
@@ -146,7 +146,7 @@ $('#generate-diff').on('click', function () {
 
     // Send formData to the server
     $.ajax({
-        url: "/diff-upload",
+        url: "/diff-stats",
         type: "POST",
         data: formData,
         dataType: 'text', // expecting text to be returned

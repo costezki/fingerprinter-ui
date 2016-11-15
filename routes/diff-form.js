@@ -20,6 +20,10 @@ router.get('/diff', function (req, res) {
             alpha: {
                 title: "Dataset name",
                 description: "This is a very special dataset"
+            },
+            beta: {
+                title: "Dataset name",
+                description: "This is a very special dataset"
             }
         }
     });
@@ -28,10 +32,10 @@ router.get('/diff', function (req, res) {
 /**
  * handling POST AJAX calls.
  */
-router.post('/diff-upload', function (req, res) {
+router.post('/diff-stats', function (req, res) {
     // create an incoming form object
     var form = new formidable.IncomingForm();
-    // specify that we want to allow the user to upload multiple files in a single request
+    // specify that we want to allow the user to stats multiple files in a single request
     // form.multiples = true;
     // store all uploads in the /uploads directory
     form.uploadDir = path.join(__dirname, '../uploads');
@@ -96,16 +100,6 @@ router.post('/diff-upload', function (req, res) {
     });
 });
 
-
-router.get("/reports/:filename", function (req, res) {
-    var file = path.join(__dirname, '../reports/' + req.params.filename);
-    res.download(file, function (err) {
-        if (err) {
-            res.end("File not found.");
-        }
-    }); // Set disposition and send it.
-});
-
 /**
  * Calls a child Python process that generates the Report
  * @param jsonFile
@@ -117,7 +111,7 @@ function callPythonScriptDiff(jsonFile, onCloseCallback) {
         mode: 'text', // json, binary
         pythonOptions: ['-u'],
         scriptPath: path.join(__dirname, '../pysrc/RDF-fingerprint-diff/fingerprint/'),
-        args: ['stats', jsonFile]
+        args: ['diff', jsonFile]
     };
     //creating a PythonShell object
     var shell = new PythonShell("triple_profiler.py",

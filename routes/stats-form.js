@@ -11,7 +11,7 @@ var PythonShell = require('python-shell');
 
 /* GET home page. */
 router.get('/stats', function (req, res) {
-    res.render('upload-form', {
+    res.render('stats-form', {
         title: 'RDF Fingerprinter',
         config: {
             title: "Data-set Fingerprint Report - Application Profile and Descriptive Statistics",
@@ -28,10 +28,10 @@ router.get('/stats', function (req, res) {
 /**
  * handling POST AJAX calls.
  */
-router.post('/stats-upload', function (req, res) {
+router.post('/stats-stats', function (req, res) {
     // create an incoming form object
     var form = new formidable.IncomingForm();
-    // specify that we want to allow the user to upload multiple files in a single request
+    // specify that we want to allow the user to stats multiple files in a single request
     // form.multiples = true;
     // store all uploads in the /uploads directory
     form.uploadDir = path.join(__dirname, '../uploads');
@@ -92,14 +92,6 @@ router.post('/stats-upload', function (req, res) {
 });
 
 
-router.get("/reports/:filename", function (req, res) {
-    var file = path.join(__dirname, '../reports/' + req.params.filename);
-    res.download(file, function (err) {
-        if (err) {
-            res.end("File not found.");
-        }
-    }); // Set disposition and send it.
-});
 
 /**
  * Calls a child Python process that generates the Report
