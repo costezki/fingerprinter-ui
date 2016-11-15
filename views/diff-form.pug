@@ -26,18 +26,26 @@ block content
 
                     fieldset
                         //legend Report
-                        +input('text', "diff-title", config.title, 'Report title', 'config[title]')
-                        +input('text', "diff-author", config.author, 'Report author', 'config[author]')
-                        +input('text', "diff-description", config.description, 'Report description', 'config[description]')
-                        +input('text', "diff-alpha-title", config.alpha.title, 'Alpha title', 'config[alpha][title]')
-                        +input('text', "diff-alpha-description", config.alpha.description, 'Alpha description', 'config[alpha][description]')
+                        //+input('text', "diff-title", config.title, 'Report title', 'config[title]')
+                        //+input('text', "diff-author", config.author, 'Report author', 'config[author]')
+                        //+input('text', "diff-description", config.description, 'Report description', 'config[description]')
+                        div.form-group
+                            label(for='diff-alpha-title') Alpha title
+                            input(type='text' class='form-control' id="diff-alpha-title" value=config.alpha.title name='config[alpha][title]')
+                        div.form-group
+                            label(for='diff-alpha-description') Alpha description
+                            input(type='text' class='form-control' id="diff-alpha-description" value=config.alpha.description name='config[alpha][description]')
 
                         .form-group
                             label(for="diff-alpha") Alpha file input
                             input.filestyle.form-control(type='file' id='diff-alpha'  data-buttonName="btn-primary" data-placeholder="No file"
                             data-buttonText="Select File")
-                        +input('text', "diff-beta-title", config.beta.title, 'Beta title', 'config[beta][title]')
-                        +input('text', "diff-beta-description", config.beta.description, 'Beta description', 'config[beta][description]')
+                        div.form-group
+                            label(for='diff-beta-title') Beta title
+                            input(type='text' class='form-control' id="diff-beta-title" value=config.beta.title name='config[beta][title]')
+                        div.form-group
+                            label(for='diff-beta-description') Beta description
+                            input(type='text' class='form-control' id="diff-beta-description" value=config.beta.description name='config[beta][description]')
                         .form-group
                             label(for="diff-beta") Beta file input
                             input.filestyle.form-control(type='file' id='diff-beta'  data-buttonName="btn-primary" data-placeholder="No file"

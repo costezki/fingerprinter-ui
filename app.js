@@ -49,6 +49,7 @@ app.use('/font-awesome', express.static(__dirname + '/node_modules/font-awesome/
 app.use('/jade-bootstrap', express.static(__dirname + '/node_modules/jade-bootstrap/'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/'));
 app.use('/bootstrap-filestyle', express.static(__dirname + '/node_modules/bootstrap-filestyle/'));
+app.use('/clipboard', express.static(__dirname + '/node_modules/clipboard/'));
 // app.use('/fs', express.static(__dirname + '/node_modules/fs/'));
 
 // catch 404 and forward to error handler
