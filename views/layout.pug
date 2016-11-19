@@ -9,9 +9,30 @@ append styles
 
     script(type="text/javascript", src="/jquery/dist/jquery.js")
     script(type="text/javascript", src="/bootstrap-filestyle/src/bootstrap-filestyle.js")
+
 block body
+    block selected
+        -var selected= "home"; //Default selection
+
+    -
+        var menu = { 'home': {"path": '/', "label":"Home" },
+            'stats': { "path":'/stats', "label":"Fingerprint Statistics" },
+            'diff': { "path":'/diff', "label":"Fingerprint Diff" } };
+
     block header
-        +navbar(title,"navbar")
+        .container
+            .row
+                .col-md-10.col-md-offset-1
+                    +navbar(title,"navbar", "default","/")
+                        .navbar-brand
+                            a(href="/")
+                                img(src = "/images/svg/fingerprint-outline-with-magnifying-glass.svg",
+                            alt="header image", width='30', height='30')
+                        each val, key in menu
+                            if selected === key
+                                +nav_item(val["path"],"active")=val["label"]
+                            else
+                                +nav_item(val["path"])=val["label"]
 
     .container
         block content
@@ -21,4 +42,6 @@ block body
         -year= new Date().getFullYear();
         footer.footer
             .container
-                p.text-muted.text-center &copy; Eugeniu Costetchi #{year}
+                p.text-muted.text-center &copy;&#32;
+                    a(href="http://costezki.ro" target="_blank") Eugeniu Costetchi
+                    | &#32;#{year}

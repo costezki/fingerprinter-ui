@@ -9,20 +9,12 @@ var express = require('express');
 var router = express.Router();
 var PythonShell = require('python-shell');
 
+var configFilename = "./resources/defaultValues.json";
+
+
 /* GET home page. */
 router.get('/stats', function (req, res) {
-    res.render('stats-form', {
-        title: 'RDF Fingerprinter',
-        config: {
-            title: "Data-set Fingerprint Report - Application Profile and Descriptive Statistics",
-            author: "Generated with RDF Fingerprinter (by Eugeniu Costetchi)",
-            description: "This is a default dataset description",
-            alpha: {
-                title: "Dataset name",
-                description: "This is a very special dataset"
-            }
-        }
-    });
+    res.render('stats-form', JSON.parse(fs.readFileSync(configFilename, 'utf8')));
 });
 
 /**
@@ -90,7 +82,6 @@ router.post('/stats-stats', function (req, res) {
         });
     });
 });
-
 
 
 /**

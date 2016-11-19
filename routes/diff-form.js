@@ -9,24 +9,12 @@ var express = require('express');
 var router = express.Router();
 var PythonShell = require('python-shell');
 
+
+var configFilename = "./resources/defaultValues.json";
+
 /* GET home page. */
 router.get('/diff', function (req, res) {
-    res.render('diff-form', {
-        title: 'RDF Fingerprinter',
-        config: {
-            title: "Data-set Fingerprint Report - Application Profile and Descriptive Statistics",
-            author: "Generated with RDF Fingerprinter (by Eugeniu Costetchi)",
-            description: "This is a default dataset description",
-            alpha: {
-                title: "Dataset name",
-                description: "This is a very special dataset"
-            },
-            beta: {
-                title: "Dataset name",
-                description: "This is a very special dataset"
-            }
-        }
-    });
+    res.render('diff-form', JSON.parse(fs.readFileSync(configFilename, 'utf8')));
 });
 
 /**
@@ -116,18 +104,6 @@ function callPythonScriptDiff(jsonFile, onCloseCallback) {
     //creating a PythonShell object
     var shell = new PythonShell("triple_profiler.py",
         pyOptionsDefault);
-
-    // function (err, result) {
-    //     // Runs the Python script and invokes callback with the results.
-    //     // The callback contains the execution error (if any) as well as
-    //     // an array of messages emitted from the Python script.
-    //     if (err) {
-    //         console.log('ErrorR: ' + err);
-    //     }
-    //     if (result) {
-    //         console.log('ResultR: ' + result);
-    //     }
-    // }
 
     shell.on('message', function (message) {
         // handle message (a line of text from stdout)

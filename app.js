@@ -7,7 +7,7 @@ var mkdirp = require('mkdirp');
 
 // var bodyParser = require('body-parser');
 
-var PythonShell = require('python-shell');
+// var PythonShell = require('python-shell');
 var child_process = require('child_process');
 
 // var formidable = require('express-formidable');

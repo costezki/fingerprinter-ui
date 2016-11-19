@@ -1,8 +1,11 @@
 extends layout
 
+block selected
+    -var selected= "diff";
+
 block content
     .row
-        .col-md-12
+        .col-md-8.col-md-offset-2
             +panel-primary("Descriptive statistical report ")
                 form(method="post" id='diff-form')
                     //progress bar
@@ -37,7 +40,7 @@ block content
                             input(type='text' class='form-control' id="diff-alpha-description" value=config.alpha.description name='config[alpha][description]')
 
                         .form-group
-                            label(for="diff-alpha") Alpha file input
+                            label(for="diff-alpha") Alpha CSV file (SPARQL query result set)
                             input.filestyle.form-control(type='file' id='diff-alpha'  data-buttonName="btn-primary" data-placeholder="No file"
                             data-buttonText="Select File")
                         div.form-group
@@ -47,7 +50,7 @@ block content
                             label(for='diff-beta-description') Beta description
                             input(type='text' class='form-control' id="diff-beta-description" value=config.beta.description name='config[beta][description]')
                         .form-group
-                            label(for="diff-beta") Beta file input
+                            label(for="diff-beta") Beta CSV file (SPARQL query result set)
                             input.filestyle.form-control(type='file' id='diff-beta'  data-buttonName="btn-primary" data-placeholder="No file"
                             data-buttonText="Select File")
                     p.buttons.text-center

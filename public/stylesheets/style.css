@@ -1,8 +1,9 @@
 body {
-    padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 15px;
+    font: medium "Lucida Grande", Helvetica, Arial, sans-serif;
     height: 100%;
     background-color: #91b8d2;
+    line-height: 1.3;
 }
 
 .panel > .panel-heading {
@@ -12,11 +13,16 @@ body {
 }
 
 a {
-    color: #00B7FF;
+    color: #494557;
+}
+
+h4 {
+    font-size: medium;
+    font-weight: bolder;
+    color: #337AB7;
 }
 
 .code {
     font-family: Consolas, Lucida Console, monospace;
-    font-size: larger;
     text-align: left;
 }

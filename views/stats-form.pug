@@ -1,8 +1,11 @@
-extends layout
+extends layout.pug
+
+block selected
+    -var selected= "stats";
 
 block content
     .row
-        .col-md-12
+        .col-md-8.col-md-offset-2
             +panel-primary("Descriptive statistical report ")
                 form(method="post" id='stats-form')
                     //progress bar
@@ -36,7 +39,7 @@ block content
                             label(for='stats-alpha-description') Dataset description
                             input(type='text' class='form-control' id="stats-alpha-description" value=config.alpha.description name='config[alpha][description]')
                         .form-group
-                            label(for="stats-alpha") CSV file (result set of the SPARQL query)
+                            label(for="stats-alpha") CSV file (SPARQL query result set)
                             input.filestyle.form-control(type='file' id='stats-alpha'  data-buttonName="btn-primary" data-placeholder="No file"
                             data-buttonText="Select File")
                     p.buttons.text-center

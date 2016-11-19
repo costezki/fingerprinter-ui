@@ -6,22 +6,6 @@ $('.alert .close').on('click', function (e) {
     $(this).parent().hide();
 });
 
-// Copy text in index.pug in clipboard
-var clipboard = new Clipboard('#clipboard');
-
-clipboard.on('success', function (e) {
-    // console.info('Action:', e.action);
-    // console.info('Text:', e.text);
-    // console.info('Trigger:', e.trigger);
-
-    e.clearSelection();
-});
-
-clipboard.on('error', function (e) {
-    // console.error('Action:', e.action);
-    // console.error('Trigger:', e.trigger);
-});
-
 /**
  * eneble or disable all elements of a form
  * @param form
@@ -41,7 +25,6 @@ function enableForm(form, enabled) {
  * Get data inputs: title, author, description and file
  * Create object by name stats
  */
-
 $('#generate-stats').on('click', function () {
     enableForm("stats-form", true);
 
@@ -115,6 +98,10 @@ $('#generate-stats').on('click', function () {
     $('.progress-bar').delay(800).width('15%');
 });
 
+/**
+ * Get data inputs: title, author, description and file
+ * Create object by name diff
+ */
 $('#generate-diff').on('click', function () {
     enableForm("diff-form", true);
 

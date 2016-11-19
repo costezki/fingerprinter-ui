@@ -13,7 +13,10 @@ router.get("/reports/:filename", function (req, res) {
     var file = path.join(__dirname, '../reports/' + req.params.filename);
     res.download(file, function (err) {
         if (err) {
-            res.end("File not found.");
+            var err = new Error('Oops! File not found.'); //TODO: check if this works
+            err.status = 404;
+            next(err);
+            res.next(err);
         }
     }); // Set disposition and send it.
 });
