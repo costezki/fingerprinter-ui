@@ -13,11 +13,10 @@ append styles
 block body
     block selected
         -var selected= "home"; //Default selection
-
     -
         var menu = { 'home': {"path": '/', "label":"Home" },
-            'stats': { "path":'/stats', "label":"Fingerprint Statistics" },
-            'diff': { "path":'/diff', "label":"Fingerprint Diff" } };
+        'stats': { "path":'/stats', "label":"Fingerprint Statistics" },
+        'diff': { "path":'/diff', "label":"Fingerprint Diff" } };
 
     block header
         .container
@@ -27,14 +26,36 @@ block body
                         .navbar-brand
                             a(href="/")
                                 img(src = "/images/svg/fingerprint-outline-with-magnifying-glass.svg",
-                            alt="header image", width='30', height='30')
+                                alt="header image", width='30', height='30')
                         each val, key in menu
                             if selected === key
                                 +nav_item(val["path"],"active")=val["label"]
                             else
                                 +nav_item(val["path"])=val["label"]
-
-    .container
+            .header.clearfix
+                nav
+                    ul.nav.nav-pills.pull-right
+                        if user
+                            li(role="presentation")
+                                a(href="/") #{username}
+                            li(role="presentation")
+                                a(href="/users/logout") Logout
+                        else
+                            li(role="presentation")
+                                a(href="/users/login") Login
+                            li(role="presentation")
+                                a(href="/users/register") Register
+                h3.text-muted Authorisation
+            .row
+                .col-lg-12
+                    if success_msg != ""
+                        .alert.alert-success #{success_msg}
+                    if error_msg != ""
+                        .alert.alert-danger #{error_msg}
+                    if error != ""
+                        .alert.alert-danger #{error}
+                    #{body}
+    .container-fluid
         block content
             p.text-center some content goes here
 
