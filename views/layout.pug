@@ -37,7 +37,7 @@ block body
                     ul.nav.nav-pills.pull-right
                         if user
                             li(role="presentation")
-                                a(href="/") #{username}
+                                a(href="/") Hello, #{user.name}
                             li(role="presentation")
                                 a(href="/users/logout") Logout
                         else
