@@ -2,24 +2,28 @@ extends layout
 
 block content
     .container
-        h2.page-header Register
-        if errors
-            each msg,i in errors
-                .alert.alert-danger #{msg}
-        form(method="post" action="/users/register")
-            .form-group
-                label(for="name") Name
-                input.form-control(type="text" placeholder="Name" id="name" name="name")
-            .form-group
-                label(for="username") Username
-                input.form-control(type="text" placeholder="Username" id="username" name="username")
-            .form-group
-                label(for="email") Email
-                input.form-control(type="email" placeholder="Email" id="email" name="email")
-            .form-group
-                label(for="password") Password
-                input.form-control(type="password" placeholder="Password" id="password" name="password")
-            .form-group
-                label(for="password2") Confirm Password
-                input.form-control(type="password" placeholder="Confirm Password" id="password2" name="password2")
-            button.btn.btn-default(type="submit") Submit
+        .row
+            .col-md-10.col-md-offset-1
+                if errors
+                    each msg,i in errors
+                        .alert.alert-danger #{msg}
+                form(method="post" action="/users/register")
+                    .form-group
+                        label(for="name") Name
+                        input.form-control(type="text" placeholder="Name" id="name" name="name")
+                    .form-group
+                        label(for="username") Username
+                        input.form-control(type="text" placeholder="Username" id="username" name="username")
+                    .form-group
+                        label(for="email") Email
+                        input.form-control(type="email" placeholder="Email" id="email" name="email")
+                    .form-group
+                        label(for="password") Password
+                        input.form-control(type="password" placeholder="Password" id="password" name="password")
+                    .form-group
+                        label(for="password2") Confirm Password
+                        input.form-control(type="password" placeholder="Confirm Password" id="password2" name="password2")
+                    p.buttons.text-center
+                        button.btn.btn-primary(type="submit")
+                            span.glyphicon.glyphicon-edit.fa-fw(aria-hidden="true")
+                            | Create Account

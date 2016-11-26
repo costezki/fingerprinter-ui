@@ -17,44 +17,46 @@ block body
         var menu = { 'home': {"path": '/', "label":"Home" },
         'stats': { "path":'/stats', "label":"Fingerprint Statistics" },
         'diff': { "path":'/diff', "label":"Fingerprint Diff" } };
+    -var title = "RDF Fingerprinter"
 
     block header
-        .container
+        // manually constructed navbar by following mixin suggestions with some minor adaptations :)
+        .container-fluid
             .row
                 .col-md-10.col-md-offset-1
-                    +navbar(title,"navbar", "default","/")
-                        .navbar-brand
-                            a(href="/")
-                                img(src = "/images/svg/fingerprint-outline-with-magnifying-glass.svg",
-                                alt="header image", width='30', height='30')
-                        each val, key in menu
-                            if selected === key
-                                +nav_item(val["path"],"active")=val["label"]
-                            else
-                                +nav_item(val["path"])=val["label"]
-            .header.clearfix
-                nav
-                    ul.nav.nav-pills.pull-right
-                        if user
-                            li(role="presentation")
-                                a(href="/") Hello, #{user.name}
-                            li(role="presentation")
-                                a(href="/users/logout") Logout
-                        else
-                            li(role="presentation")
-                                a(href="/users/login") Login
-                            li(role="presentation")
-                                a(href="/users/register") Register
-                h3.text-muted Authorisation
-            .row
-                .col-lg-12
-                    if success_msg != ""
-                        .alert.alert-success #{success_msg}
-                    if error_msg != ""
-                        .alert.alert-danger #{error_msg}
-                    if error != ""
-                        .alert.alert-danger #{error}
-                    #{body}
+                    - var href = (typeof style === 'undefined') ? "/" : href
+                    - var navbarId = "mainNavbar"
+                    nav( role="navigation", class=["navbar", "navbar-default"] )
+                        .navbar-header
+                            button.navbar-toggle.collapsed( type="button", data-toggle="collapse", data-target="#" + id, aria-expanded="false", aria-controls="navbar")
+                                span.sr-only Toggle navigation
+                                span.icon-bar
+                                span.icon-bar
+                                span.icon-bar
+                            a.navbar-brand(href=href)= title
+                                //img(src = "/images/svg/fingerprint-outline-with-magnifying-glass.svg",
+                                //    alt="header image", width='30', height='30')
+
+                        .navbar-collapse.collapse
+                            .collapse.navbar-collapse( id=navbarId )
+                                .nav.navbar-nav.navbar-left
+                                    each val, key in menu
+                                        if selected === key
+                                            +nav_item(val["path"],"active")=val["label"]
+                                        else
+                                            +nav_item(val["path"])=val["label"]
+
+                                .nav.navbar-nav.navbar-right
+                                    if user
+                                        +nav_item("/") #{user.name}
+                                        +nav_item("/users/logout")
+                                            span.glyphicon.glyphicon-log-out(aria-hidden="true")
+                                    else
+                                        +nav_item("/users/login")
+                                            span.glyphicon.glyphicon-log-in(aria-hidden="true")
+                                        //+nav_item("/users/register")
+                                        //    span.glyphicon.glyphicon-edit(aria-hidden="true")
+
     .container-fluid
         block content
             p.text-center some content goes here

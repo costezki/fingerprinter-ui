@@ -1,0 +1,3 @@
+[submodule "rdf-fingerprinter"]
+    path = pysrc/RDF-fingerprint-diff
+    url = https://github.com/costezki/RDF-fingerprint-diff.git
