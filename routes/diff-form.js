@@ -57,7 +57,12 @@ router.post('/diff-stats', function (req, res) {
 
         var jsonFn = path.join(form.uploadDir, 'config_' + uuid.v4() + ".json");
         // adding extra file parameters
+        var defaults = JSON.parse(fs.readFileSync(configFilename, 'utf8'));
+
         var outputJs = fields;
+        outputJs['title'] = defaults['config']['title'];
+        outputJs['author'] = defaults['config']['author'];
+
         outputJs['alpha'] = {'file': files['alpha']};
         outputJs['output'] = path.join(__dirname, '../reports/report_' + uuid.v4());
         outputJs['alpha']['title'] = fields['alpha-title'];

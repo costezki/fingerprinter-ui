@@ -20,14 +20,14 @@ function ensureAuthenticated(req, res, next) {
 
 module.exports = router;
 
-router.get("/reports/:filename", function (req, res) {
+router.get("/reports/:filename", function (req, res, next) {
     var file = path.join(__dirname, '../reports/' + req.params.filename);
     res.download(file, function (err) {
         if (err) {
             var err = new Error('Oops! File not found.'); //TODO: check if this works
             err.status = 404;
             next(err);
-            res.next(err);
+            // res.next(err);
         }
     }); // Set disposition and send it.
 });
