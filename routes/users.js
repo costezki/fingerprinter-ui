@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
 var User = require('../models/user');
 
 // Register
@@ -71,7 +70,8 @@ passport.use(new LocalStrategy(
                 }
             });
         });
-    }));
+    }
+));
 
 passport.serializeUser(function (user, done) {
     done(null, user.id);
@@ -87,7 +87,8 @@ router.post('/login',
     passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}),
     function (req, res) {
         res.redirect('/');
-    });
+    }
+);
 
 router.get('/logout', function (req, res) {
     req.logout();
