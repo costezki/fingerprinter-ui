@@ -1,0 +1,3 @@
+[submodule "RDF-fingerprint-diff"]
+	path = RDF-fingerprint-diff
+	url = https://github.com/costezki/RDF-fingerprint-diff.git
