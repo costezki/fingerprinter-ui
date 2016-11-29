@@ -103,7 +103,7 @@ function callPythonScriptDiff(jsonFile, onCloseCallback) {
     var pyOptionsDefault = {
         mode: 'text', // json, binary
         pythonOptions: ['-u'],
-        scriptPath: path.join(__dirname, '../pysrc/RDF-fingerprint-diff/fingerprint/'),
+        scriptPath: path.join(__dirname, '../RDF-fingerprint-diff/fingerprint/'),
         args: ['diff', jsonFile]
     };
     //creating a PythonShell object
