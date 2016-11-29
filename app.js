@@ -15,8 +15,8 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 
-mongoose.connect('mongodb://localhost/fingerprinter');
-var db = mongoose.connection;
+// mongoose.connect('mongodb://localhost/fingerprinter');
+// var db = mongoose.connection;
 
 // var bodyParser = require('body-parser');
 

@@ -46,14 +46,14 @@ block body
                                         else
                                             +nav_item(val["path"])=val["label"]
 
-                                .nav.navbar-nav.navbar-right
-                                    if user
-                                        +nav_item("/") #{user.name}
-                                        +nav_item("/users/logout")
-                                            span.glyphicon.glyphicon-log-out(aria-hidden="true")
-                                    else
-                                        +nav_item("/users/login")
-                                            span.glyphicon.glyphicon-log-in(aria-hidden="true")
+                                //.nav.navbar-nav.navbar-right
+                                //    if user
+                                //        +nav_item("/") #{user.name}
+                                //        +nav_item("/users/logout")
+                                //            span.glyphicon.glyphicon-log-out(aria-hidden="true")
+                                //    else
+                                //        +nav_item("/users/login")
+                                //            span.glyphicon.glyphicon-log-in(aria-hidden="true")
                                         //+nav_item("/users/register")
                                         //    span.glyphicon.glyphicon-edit(aria-hidden="true")
 
