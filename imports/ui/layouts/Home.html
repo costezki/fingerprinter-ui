@@ -1,0 +1,79 @@
+<template name="Home">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-#{type}">
+					<div class="panel-heading">
+						<h3 class="panel-title">Introduction</h3>
+					</div>
+					<div class="panel-body">
+						<h4>What is a Data Fingerprint good for?</h4>
+						<p>Through the dataset fingerprint you can get a glimpse of how your data is actually shaped.
+							It offers an overview of what classes are instantiated with which properties and to what degree.
+							You can generate a  <a href="/stats">dataset fingerprint</a> or compare how the fingerprints of two datasets  <a href="/diff">differ</a>.
+						</p>
+						<h4>How do I generate the dataset fingerprint?</h4>
+						<p>In order to generate the fingerprint of your dataset you have to:</p>
+						<ul>
+							<li>load it into a triple store</li>
+							<li>execute the SPARQL query provided below</li>
+							<li>save the result as CVS file</li>
+							<li>in  <a href="/stats">Fingerprint Statistics form</a>, name and describe your dataset and upload the CSV file</li>
+							<li>press "generate" button and wait a while for the report to come out.</li>
+						</ul>
+						<p></p>
+						<h4>How to can I compare two datasets?</h4>
+						<p>Just as in the case of generating fingerprint statistics, you have to first  execute the SPARQL
+							query for each of the datasets. Then go to the  <a href="/diff">Fingerprint Diff Form</a> and name and describe each dataset and upload both CSV files. The report generation process may take
+							a few tens of seconds depending on how big are the CSV files.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-#{type}">
+						<div class="panel-heading">
+							<h3 class="panel-title">SPARQL query</h3>
+						</div>
+						<div class="panel-body">
+							<pre class="code">
+								<code>
+									<p id="code">
+										select distinct ?stype ?p ?ootype ?propType
+										(count(distinct ?s) as ?scnt)
+										(count(distinct ?o) as ?ocnt)
+										(count(*) as ?cnt)
+										(min(?sp_star) as ?min_sp)
+										(max(?sp_star) as ?max_sp)
+										(avg(?sp_star) as ?avg_sp)
+										where
+										{
+											?s ?p ?o .
+											?s a ?stype .
+											optional {
+												?o a ?otype .
+											}
+											{
+												select distinct ?s ?p (count(*)as ?sp_star)
+												{
+													?s ?p [].
+												} group by ?s ?p
+											}
+											bind( if(?p=rdf:type, ?stype, if(bound(?otype),?otype, datatype(?o) )) as ?ootype )
+											bind( if(?p=rdf:type,"object", if(bound(?otype),"object","data")) as ?propType)
+										}
+										group by ?stype ?p ?ootype ?propType
+										order by ?stype ?p ?ootype ?propType
+									</p>
+								</code>
+							</pre>
+								<button class="pull-right btn btn-lg bg-primary" id="clipboard" type="button" data-clipboard-action="copy" data-clipboard-target="#code">Copy to clipboard</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script src="/javascripts/index-clipboard.js"></script>
+			<main>
+
+			</main>
+		</template>
