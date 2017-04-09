@@ -9,14 +9,11 @@ let PythonShell = require('python-shell');
 
 let pathArray = ["uploads", "reports"];
 pathArray.forEach(function(item, index, array) {
-    mkdirp(Meteor.settings.path[item], function (err) {
+    mkdirp(Meteor.settings.public.path[item], function (err) {
         if (err) console.error(err);
     });
 });
 
-Meteor.startup(() => {
-    // code to run on server at startup
-});
 
 Meteor.methods({
     "create-json-and-call-python": function(formName, fileId, formData) {
@@ -39,7 +36,7 @@ Meteor.methods({
         outputJs.output = path.join(reports + '/report_' + uuid.v4());
         outputJs.alpha.title = formData[0].value;
         outputJs.alpha.description = formData[1].value;
-        outputJs.ns_file = path.join('/home/lordgarod/Web-projects/fingerprinter-ui(meteor)/private/resources/prefix.csv');
+        outputJs.ns_file = path.join( Assets.absoluteFilePath('resources/prefix.csv') );
 
         // if(formName == 'diff') {
         //     outputJs.beta = {'file': fileBeta._fileRef};

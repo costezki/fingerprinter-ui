@@ -1,0 +1,11 @@
+{
+    "public": {
+        "version": "0.2",
+        "path": {
+            "uploads": "~/temp/uploads",
+            "reports": "~/temp/reports"
+        }
+    },
+    "private": {
+    }
+}

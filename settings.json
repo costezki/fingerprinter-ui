@@ -1,12 +1,11 @@
 {
 	"public": {
-
+		"version": "0.2",
+		"path": {
+			"uploads": "~/temp/uploads",
+			"reports": "~/temp/reports"
+		}
 	},
 	"private": {
-
-	},
-	"path": {
-		"uploads": "/home/lordgarod/temp/uploads",
-		"reports": "/home/lordgarod/temp/reports"
 	}
 }
