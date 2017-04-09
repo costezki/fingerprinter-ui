@@ -1,0 +1,57 @@
+var username = require('username');
+
+var usr = username.sync();
+
+module.exports = {
+    servers: {
+        one: {
+            host: 'localhost',
+            username: usr,
+            //password: 'passwd'
+        }
+    },
+
+    meteor: {
+        name: 'fingerprinter',
+        path: '../',
+
+        servers: {
+            one: {},
+        },
+
+        buildOptions: {
+            serverOnly: true,
+        },
+
+        env: {
+            ROOT_URL: 'http://fp.costezki.ro',
+            MONGO_URL: 'mongodb://localhost/meteor',
+            PORT: 3348,
+        },
+
+        docker: {
+            image: 'costezki/meteor-fingerprinter:latest',
+            // change to 'kadirahq/meteord' if your app is not using Meteor 1.4
+            //image: 'abernix/meteord:base',
+            // imagePort: 80, // (default: 80, some images EXPOSE different ports)
+        },
+
+        // This is the maximum time in seconds it will wait
+        // for your app to start
+        // Add 30 seconds if the server has 512mb of ram
+        // And 30 more if you have binary npm dependencies.
+        deployCheckWaitTime: 60,
+
+        // Show progress bar while uploading bundle to server
+        // You might need to disable it on CI servers
+        enableUploadProgressBar: false
+    },
+
+    mongo: {
+        port: 27017,
+        version: '3.4.1',
+        servers: {
+            one: {}
+        }
+    }
+};

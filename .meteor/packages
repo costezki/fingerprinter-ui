@@ -24,7 +24,23 @@ reactive-dict@1.1.8
 session@1.1.7
 kadira:flow-router
 kadira:blaze-layout
-twbs:bootstrap
-fortawesome:fontawesome
+zimme:active-route
 zenorocha:clipboard
+
+
+twbs:bootstrap
+tanis:bootstrap-social
+fortawesome:fontawesome
+
+simple:reactive-method
+aldeed:autoform
+aldeed:collection2-core
+mdg:validated-method
 ostrio:files
+
+#time for testing
+#xolvio:cucumber         # cucumber testing with .feature files
+practicalmeteor:mocha
+#canotto90:mocha-reporters   # attempt to change the strong white background of HTML mocha reporter, intended to work with mike:mocha
+practicalmeteor:chai
+#practicalmeteor:sinon
