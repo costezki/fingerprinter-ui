@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-git clone https://github.com/costezki/RDF-fingerprint-diff
+rm -rf RDF-fingerprint-diff
+git clone https://github.com/costezki/RDF-fingerprint-diff.git && cd ./RDF-fingerprint-diff && pip install .
