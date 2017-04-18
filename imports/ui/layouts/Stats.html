@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<div class="panel pane-#{type}">
+				<div class="panel panel-#{type}">
 					<div class="panel-heading">
 						<h3 class="panel-title">Descriptive statistical report</h3>
 					</div>
@@ -21,13 +21,14 @@
 									<span>×</span>
 								</button>
 								The Report is available at this
-								<a class="alert-link" id="report-link" href="#" target="_blank"> link</a>.
+								<a class="alert-link" id="report-link" href="{{reportLink.link}}?download=true" download="{{reportLink.name}}" target="_blank"> {{reportLink.name}}</a>.
 							</div>
 							<div class="alert alert-dismissible alert-danger" id="error-bubble" role="alert" hidden="">
 								<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
 								<button class="close" type="button" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true"> ×</span>
-								</button>There was an error while processing your request, please try again.
+								</button>
+								There was an error while processing your request, please try again.
 							</div>
 							<fieldset>
 								<div class="form-group">
@@ -39,18 +40,8 @@
 									<input class="form-control" type="text" id="stats-alpha-description" value="This is a very special dataset." name="alpha-description">
 								</div>
 								<div class="form-group">
-									<!-- <label for="stats-alpha">CSV file (SPARQL query result set)</label>
-									<input class="filestyle form-control" name="alpha-file" type="file" id="stats-alpha" data-buttonname="btn-primary" data-placeholder="No file" data-buttontext="Select File" tabindex="-1" style="position: absolute; clip: rect(0px 0px 0px 0px);">
-									<div class="bootstrap-filestyle input-group">
-										<input type="text" class="form-control " placeholder="No file" disabled="">
-										<span class="group-span-filestyle input-group-btn" tabindex="0">
-											<label for="stats-alpha" class="btn btn-primary ">
-												<span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>
-												<span class="buttonText">Select File</span>
-											</label>
-										</span>
-									</div> -->
-									{{> UploadForm}}
+									<label for="stats-alpha">CSV file (SPARQL query result set)</label>
+									{{> UploadAlphaFile}}
 								</div>
 							</fieldset>
 							<p class="buttons text-center">

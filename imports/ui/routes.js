@@ -2,8 +2,6 @@ import {Meteor} from 'meteor/meteor';
 
 import "./layouts/layouts";
 import "./partials/partials";
-import "./collections/fileCollection";
-import "./collections/form-settings";
 
 BlazeLayout.setRoot('body');
 

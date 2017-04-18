@@ -11,6 +11,11 @@ header,
 footer h1 {
     text-align: center;
 }
+
+.pre-scrollable {
+    max-height: 375px;
+}
+
 .navbar {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -26,6 +31,7 @@ footer h1 {
     margin-left: auto;
 }
 .container-fluid {
+    margin-top: 5px;
     padding: 0;
 }
 .container-fluid .nav {
@@ -147,6 +153,19 @@ h4 {
 
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.buttonText {
+    margin-left: 5px;
+}
+
+#stats-form input, #diff-form input {
+    padding-left: 10px !important;
+}
+
+.filestyle {
+    position: absolute;
+    clip: rect(0px 0px 0px 0px);
 }
 
 /* Responsive: Portrait tablets and up */

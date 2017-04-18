@@ -1,3 +1,4 @@
+import { Csvs } from '../../collections/fileCollection';
 /**
 * Select all .alert .close buttons and setting them to hide their parent (i.e. the info/error bubble)
 * rather than removing the info/error bubble from the DOM.
@@ -27,7 +28,7 @@ function enableForm(form, enabled) {
 * Get data inputs: title, author, description and file
 * Create formData object by name stats or diff
 */
-export function generateFormData(form, formData, fileId, formName) {
+export function generateFormData(form, formData, formName) {
     enableForm(form, true);
 
     $('.progress-bar').text('0%');
@@ -35,33 +36,99 @@ export function generateFormData(form, formData, fileId, formName) {
     $('#error-bubble').hide();
     $('#info-bubble').hide();
 
-    Meteor.call("create-json-and-call-python", formName, fileId, formData, function(error, result) {
-        if(error) {
-            console.log("Error:" + error);
-            enableForm(form, true);
-            $('#error-bubble').show();
-            $('#info-bubble').hide();
-            return false;
+    if (form["alpha-file"].files && form["alpha-file"].files[0]) {
+        // We upload only one file, in case
+        // multiple files were selected
+        let alpha = Csvs.insert({
+            file: form["alpha-file"].files[0],
+            streams: 'dynamic',
+            chunkSize: 'dynamic'
+        }, false);
+
+        // Array for file id
+        let fileId = [];
+        let flag = 0;
+
+        if (formName == "diff") {
+            let beta = Csvs.insert({
+                file: form["beta-file"].files[0],
+                streams: 'dynamic',
+                chunkSize: 'dynamic'
+            }, false);
+
+            beta.on('end', function (error, fileObj) {
+                if (error) {
+                    console.log('Error during upload: ' + error);
+                } else {
+                    fileId.push(fileObj._id);
+                    flag += 1;
+                }
+            });
+
+            beta.start();
         }
 
-        console.log("Success");
-        $('.progress-bar').text('100%');
-        $('.progress-bar').width('100%');
+        alpha.on('end', function (error, fileObj) {
+            if (error) {
+                console.log('Error during upload: ' + error);
+            } else {
+                fileId.push(fileObj._id);
+                flag += 1;
 
-        $('#report-link').attr('href', result);
-        $('#info-bubble').show();
-        $('#error-bubble').hide();
+                if (flag > 0) {
+                    fileId = JSON.stringify(fileId);
+                    Meteor.call("generateJSON", { formName, fileId,  formData }, function(error) {
+                        if(error) {
+                            console.log("Error:" + error);
+                            enableForm(form, true);
+                            $('#error-bubble').show();
+                            $('#info-bubble').hide();
+                            return false;
+                        }
 
-        setTimeout(function () {
-            $('.progress-bar').text("0%");
-            $('.progress-bar').width("0%");
+                        $('.progress-bar').text('100%');
+                        $('.progress-bar').width('100%');
 
-            enableForm(form, false);
-        }, 20000); // wait for 20 seconds before resenting the progress bar to zero
-    });
+                        $('#info-bubble').show();
+                        $('#error-bubble').hide();
+
+                        setTimeout(function () {
+                            $('.progress-bar').text("0%");
+                            $('.progress-bar').width("0%");
+
+                            enableForm(form, false);
+                        }, 20000); // wait for 20 seconds before resenting the progress bar to zero
+                    });
+                }
+            }
+        });
+
+        alpha.start();
+    }
 
     // assume that the the server response will not come sooner than 800 mx and
     // speculate a small progress on the progress bar
     $('.progress-bar').delay(800).text('15%');
     $('.progress-bar').delay(800).width('15%');
+}
+
+// Set in text input file name and size (not important function)
+export function setFileDescription(event) {
+    let uploadFile = event.target;
+    let fileName = uploadFile.files[0].name;
+    let fileSize = uploadFile.files[0].size / 1000000;
+
+    if (fileSize < 1) {
+        if (fileSize.toFixed(3) < 0.800) {
+            if ((fileSize * 1000).toFixed(3) < 1) {
+                fileSize = (fileSize * 1000000) + "bytes";
+            } else {
+                fileSize = (fileSize * 1000).toFixed(1) + "kb";
+            }
+        }
+    } else {
+        fileSize = fileSize.toFixed(1) + "mb";
+    }
+
+    $(uploadFile.parentNode).find(".bootstrap-filestyle input").val(fileName + " (" + fileSize + ")");
 }

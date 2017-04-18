@@ -7,7 +7,7 @@ module.exports = {
         one: {
             host: 'localhost',
             username: usr,
-            //password: 'passwd'
+            password: '1'
         }
     },
 

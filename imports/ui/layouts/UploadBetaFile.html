@@ -1,0 +1,18 @@
+<template name="UploadBetaFile">
+    <!-- {{#with currentUpload}}
+    Uploading <b>{{file.name}}</b>:
+    <span id="progress">{{progress.get}}%</span>
+    {{else}}
+
+    {{/with}} -->
+    <input type="file" name="beta-file" id="beta-file" class="filestyle form-control" data-buttonname="btn-primary" data-placeholder="No file" data-buttontext="Select File" tabindex="-1" required />
+    <div class="bootstrap-filestyle input-group">
+        <input type="text" class="form-control" placeholder="No file" disabled="">
+        <span class="group-span-filestyle input-group-btn" tabindex="0">
+            <label for="beta-file" class="btn btn-primary ">
+                <span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>
+                <span class="buttonText">Select File</span>
+            </label>
+        </span>
+    </div>
+</template>
