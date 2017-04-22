@@ -37,8 +37,10 @@ export const generateJSON = new ValidatedMethod({
         outputJs.title = defaults.title;
         outputJs.author= defaults.author;
 
+		let fileName =  'report_' + uuid.v4();
+
         outputJs.alpha = {file: fileAlpha._fileRef.path};
-        outputJs.output = reports + '/report_' + uuid.v4();
+        outputJs.output = reports + "/" + fileName;
         outputJs.alpha.title = data[0].value;
         outputJs.alpha.description = data[1].value;
         outputJs.ns_file = path.join( Assets.absoluteFilePath('resources/prefix.csv') );
@@ -46,10 +48,8 @@ export const generateJSON = new ValidatedMethod({
 		// Create object with settings data for diff-form
         if(formName == 'diff') {
             outputJs.beta = {file: fileBeta._fileRef.path};
-            outputJs.output = reports + '/report_' + uuid.v4();
             outputJs.beta.title = data[2].value;
             outputJs.beta.description = data[3].value;
-            outputJs.ns_file = path.join(Assets.absoluteFilePath('resources/prefix.csv'));
         }
 
         // writing the received data form to JSON file
@@ -57,21 +57,21 @@ export const generateJSON = new ValidatedMethod({
 
 		// TODO: Add function to call Python script and generate PDF file
 		// Write PDF file and save it in to collection
-        callBashScript(reports, function() {
+        callBashScript(jsonFn, formName, function() {
             // Find generated file with bash script
-            let fileData = fs.readFileSync(reports + "/" + "out.txt");
+            let fileData = fs.readFileSync(outputJs.output + ".pdf");
 
             // Remove duplicate file data
-            if (GeneratedFile.findOne({}, {_id: "out"})) {
-                GeneratedFile.remove({_id: "out"});
+            if (GeneratedFile.findOne({}, {_id: "Report-PDF"})) {
+                GeneratedFile.remove({_id: "Report-PDF"});
             }
 
             // Write new generated file in to collection
             GeneratedFile.write(fileData, {
-                fileName: "out.txt",
+                fileName: fileName + ".pdf",
                 fileExtension: "",
-                type: 'text/plain',
-                fileId: "out",
+                type: 'application/pdf',
+                fileId: "Report-PDF",
                 meta: {},
             }, (error, fileRef) => {
                 if (error) throw error;

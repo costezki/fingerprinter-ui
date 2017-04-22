@@ -47,58 +47,36 @@ export function generateFormData(form, formData, formName) {
 
         // Array for file id
         let fileId = [];
-        let flag = 0;
-
-        if (formName == "diff") {
-            let beta = Csvs.insert({
-                file: form["beta-file"].files[0],
-                streams: 'dynamic',
-                chunkSize: 'dynamic'
-            }, false);
-
-            beta.on('end', function (error, fileObj) {
-                if (error) {
-                    console.log('Error during upload: ' + error);
-                } else {
-                    fileId.push(fileObj._id);
-                    flag += 1;
-                }
-            });
-
-            beta.start();
-        }
 
         alpha.on('end', function (error, fileObj) {
             if (error) {
                 console.log('Error during upload: ' + error);
             } else {
                 fileId.push(fileObj._id);
-                flag += 1;
 
-                if (flag > 0) {
-                    fileId = JSON.stringify(fileId);
-                    Meteor.call("generateJSON", { formName, fileId,  formData }, function(error) {
-                        if(error) {
-                            console.log("Error:" + error);
-                            enableForm(form, true);
-                            $('#error-bubble').show();
-                            $('#info-bubble').hide();
-                            return false;
+                if (formName == "diff") {
+                    let beta = Csvs.insert({
+                        file: form["beta-file"].files[0],
+                        streams: 'dynamic',
+                        chunkSize: 'dynamic'
+                    }, false);
+
+                    beta.on('end', function (error, fileObj) {
+                        if (error) {
+                            console.log('Error during upload: ' + error);
+                        } else {
+                            fileId.push(fileObj._id);
+                            fileId = JSON.stringify(fileId);
+
+                            meteorCall({ formName, fileId,  formData });
                         }
-
-                        $('.progress-bar').text('100%');
-                        $('.progress-bar').width('100%');
-
-                        $('#info-bubble').show();
-                        $('#error-bubble').hide();
-
-                        setTimeout(function () {
-                            $('.progress-bar').text("0%");
-                            $('.progress-bar').width("0%");
-
-                            enableForm(form, false);
-                        }, 20000); // wait for 20 seconds before resenting the progress bar to zero
                     });
+
+                    beta.start();
+                } else {
+                    fileId = JSON.stringify(fileId);
+
+                    meteorCall({ formName, fileId,  formData });
                 }
             }
         });
@@ -110,6 +88,39 @@ export function generateFormData(form, formData, formName) {
     // speculate a small progress on the progress bar
     $('.progress-bar').delay(800).text('15%');
     $('.progress-bar').delay(800).width('15%');
+}
+
+// function insertAlphaFile() {
+//
+// }
+//
+// function insertBetaFile() {
+//
+// }
+
+function meteorCall(object) {
+    Meteor.call("generateJSON", object, function(error) {
+        if(error) {
+            console.log("Error:" + error);
+            enableForm(form, true);
+            $('#error-bubble').show();
+            $('#info-bubble').hide();
+            return false;
+        }
+
+        $('.progress-bar').text('100%');
+        $('.progress-bar').width('100%');
+
+        $('#info-bubble').show();
+        $('#error-bubble').hide();
+
+        setTimeout(function () {
+            $('.progress-bar').text("0%");
+            $('.progress-bar').width("0%");
+
+            enableForm(form, false);
+        }, 20000); // wait for 20 seconds before resenting the progress bar to zero
+    });
 }
 
 // Set in text input file name and size (not important function)

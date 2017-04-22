@@ -10,7 +10,7 @@ let reports = "/home/lordgarod/temp/reports";
 export const Csvs = new FilesCollection({
     storagePath: uploads,
     downloadRoute: "/downloads",
-    collectionName: 'Csvs',
+    collectionName: 'csvs',
     permissions: 777,
     allowClientCode: false, // Disallow remove files from Client
     onBeforeUpload: function (file) {

@@ -12,7 +12,7 @@ Template.Stats.onCreated(function() {
 
 Template.Stats.helpers({
     reportLink() {
-        return GeneratedFile.findOne({}, {_id: "out"});
+        return GeneratedFile.findOne({}, {_id: "Report-PDF"});
     }
 });
 

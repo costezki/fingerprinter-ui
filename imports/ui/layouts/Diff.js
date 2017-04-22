@@ -12,7 +12,7 @@ Template.Diff.onCreated(function() {
 
 Template.Diff.helpers({
     reportLink() {
-        return GeneratedFile.findOne({}, {_id: "out"});
+        return GeneratedFile.findOne({}, {_id: "Report-PDF"});
     },
     itDiff() {
         return true;
