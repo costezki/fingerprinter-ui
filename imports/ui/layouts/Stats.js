@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { Csvs, GeneratedFile } from '../../collections/fileCollection';
+import { GeneratedFile } from '../../collections/fileCollection';
 import { generateFormData, alert, setFileDescription } from "./utils";
 
 import "./Stats.html";

@@ -7,13 +7,17 @@ module.exports = {
         one: {
             host: 'localhost',
             username: usr,
-            password: '1'
+            password: 'ok'
         }
     },
 
     meteor: {
         name: 'fingerprinter',
         path: '../',
+        volumes: { // lets you add docker volumes (optional)
+            "/reports": "/reports", // passed as '-v /host/path:/container/path' to the docker run command
+            "/uploads": "/uploads", // passed as '-v /host/path:/container/path' to the docker run command
+        },
 
         servers: {
             one: {},

@@ -11,7 +11,7 @@ export function callBashScript(json, formName, callback) {
     // Fiber - async calling bash script
     Fiber(function() {
         // Bash command
-        let commang = "";
+        let command = "";
         if (formName == "diff") {
             command = 'fingerprint diff ' + json;
         } else {
@@ -22,6 +22,7 @@ export function callBashScript(json, formName, callback) {
         exec(command, function(error, stdout, stderr) {
             if(error) {
                 console.log(error);
+                console.log(stderr);
                 throw new Meteor.Error(500, command + " failed");
             }
             future.return(stdout.toString());

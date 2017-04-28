@@ -1,9 +1,9 @@
 {
     "public": {
-        "version": "0.2",
+        "version": "0.3",
         "path": {
-            "uploads": "~/temp/uploads",
-            "reports": "~/temp/reports"
+            "uploads": "/uploads",
+            "reports": "/reports"
         }
     },
     "private": {
