@@ -1,86 +1,136 @@
 import {ValidatedMethod} from 'meteor/mdg:validated-method';
-import {callBashScript} from './methodsUtils';
-import SimpleSchema from 'simpl-schema';
-import {Csvs, GeneratedFile} from '../collections/fileCollection';
+import {Csvs} from '../collections/fileCollection';
+import {StatsReportParameters, DiffReportParameters} from "../collections/reportSchemas";
 
 let fs = Npm.require('fs');
+let Future = Npm.require('fibers/future');
 let uuid = require('node-uuid');
+let shell = require('shelljs');
 let path = require('path');
 
-// let expandHomeDir = require('expand-home-dir');
-
-export const generateJSON = new ValidatedMethod({
-    name: 'generateJSON',
-    validate: new SimpleSchema({
-        formName: {type: String},
-        fileId: {type: String},
-        formData: {type: String}
-    }).validator(),
-    run({formName, fileId, formData}) {
-        // Get CSV data from collection to generate JSON file
-        let filesId = JSON.parse(fileId);
-        let fileAlpha = Csvs.findOne({_id: {$eq: filesId[0]}});
-        let data = JSON.parse(formData);
-        let fileBeta = Csvs.findOne({_id: {$eq: filesId[1]}});
-
-        // uploads and reports dir path
-        let uploads = Meteor.settings.public.path.uploads;
-        let reports = Meteor.settings.public.path.reports;
-
-        // parse the incoming request containing the form data
-        let jsonFn = uploads + '/config_' + uuid.v4() + ".json";
-        // adding extra file parameters
-        let defaults = JSON.parse(Assets.getText('resources/defaultValues.json'));
-
-        // Create object with settings data for stats-form
-        let outputJs = {};
-        outputJs.title = defaults.title;
-        outputJs.author = defaults.author;
-
-        let fileName = 'report_' + uuid.v4();
-
-        outputJs.alpha = {file: fileAlpha._fileRef.path};
-        outputJs.output = reports + "/" + fileName;
-        outputJs.alpha.title = data[0].value;
-        outputJs.alpha.description = data[1].value;
-        outputJs.ns_file = path.join(Assets.absoluteFilePath('resources/prefix.csv'));
-
-        // Create object with settings data for diff-form
-        if (formName == 'diff') {
-            outputJs.beta = {file: fileBeta._fileRef.path};
-            outputJs.beta.title = data[2].value;
-            outputJs.beta.description = data[3].value;
-        }
-
-        // writing the received data form to JSON file
-        fs.writeFileSync(jsonFn, JSON.stringify(outputJs, null, 4), "utf-8");
-
-        // TODO: Add function to call Python script and generate PDF file
-        // Write PDF file and save it in to collection
-        callBashScript(jsonFn, formName, function () {
-            // Find generated file with bash script
-            let fileData = fs.readFileSync(outputJs.output + ".pdf");
-
-            // Remove duplicate file data
-            if (GeneratedFile.findOne({}, {_id: "Report-PDF"})) {
-                GeneratedFile.remove({_id: "Report-PDF"});
-            }
-
-            // Write new generated file in to collection
-            GeneratedFile.write(fileData, {
-                fileName: fileName + ".pdf",
-                fileExtension: "",
-                type: 'application/pdf',
-                fileId: "Report-PDF",
-                meta: {},
-            }, (error, fileRef) => {
-                // console.error(error);
-                // console.error(fileRef);
-                if (error) {
-                    // console.error(error);
-                    throw error;
-                }
-            });
+/**
+ *
+ */
+export const generateDiffReport = new ValidatedMethod({
+    name: 'generateDiffReport',
+    validate: DiffReportParameters.validator(),
+    run({
+            alphaTitle, alphaDescription, alphaFile, alphaFilePath,
+            betaTitle, betaDescription, betaFile, betaFilePath
+        }) {
+        console.log({
+            alphaTitle, alphaDescription, alphaFile, alphaFilePath,
+            betaTitle, betaDescription, betaFile, betaFilePath
         });
+        ({configPath, reportFileName} = generateConfigJSON({
+            alphaTitle, alphaDescription, alphaFile, alphaFilePath,
+            betaTitle, betaDescription, betaFile, betaFilePath
+        }));
+        let fingerprintResults = callFingerprinter(configPath, "diff");
+        let cursor = addReportToCsvsCollection(reportFileName);
+        return {fileCursor: cursor, bashResults: fingerprintResults};
     }
 });
+
+/**
+ *
+ */
+export const generateStatsReport = new ValidatedMethod({
+    name: 'generateStatsReport',
+    validate: StatsReportParameters.validator(),
+    run({alphaTitle, alphaDescription, alphaFile, alphaFilePath}) {
+        ({configPath, reportFileName} = generateConfigJSON({alphaTitle, alphaDescription, alphaFile, alphaFilePath}));
+        let fingerprintResults = callFingerprinter(configPath, "stats");
+        let cursor = addReportToCsvsCollection(reportFileName);
+        return {fileCursor: cursor, bashResults: fingerprintResults};
+    }
+});
+
+/**
+ *
+ * @param alphaTitle
+ * @param alphaDescription
+ * @param alphaFilePath
+ * @param betaTitle
+ * @param betaDescription
+ * @param betaFilePath
+ * @returns {*}
+ */
+function generateConfigJSON({
+                                alphaTitle, alphaDescription, alphaFilePath,
+                                betaTitle, betaDescription, betaFilePath
+                            }) {
+    let uploads = Meteor.settings.public.path.uploads;
+    let configFileName = uploads + '/config_' + uuid.v4() + ".json";
+    let reportFileName = uploads + '/report_' + uuid.v4();
+
+    //loading default content
+    let content = JSON.parse(Assets.getText('resources/defaultValues.json'));
+
+    //setting fields
+    content.output = reportFileName;
+    content.alpha = {file: alphaFilePath};
+    content.alpha.title = alphaTitle;
+    content.alpha.description = alphaDescription;
+    content.ns_file = path.join(Assets.absoluteFilePath('resources/prefix.csv'));
+
+    content.beta = {file: betaFilePath};
+    content.beta.title = betaTitle;
+    content.beta.description = betaDescription;
+
+    //writing the file to disk
+    let fileRef = CsvsCollectionSyncWrite(JSON.stringify(content, null, 4), {
+        fileName: configFileName,
+        type: 'application/json'
+    });
+    return {configPath: fileRef.path, reportFileName: reportFileName};
+}
+
+/**
+ *
+ * @param content
+ * @param properties
+ * @returns {*}
+ */
+function CsvsCollectionSyncWrite(content, properties) {
+    let thisFuture = new Future();
+    Csvs.write(content, properties, (error, fileRef) => {
+        if (error) throw error;
+        thisFuture.return(fileRef);
+    });
+    return thisFuture.wait();
+}
+
+/**
+ *
+ * @param configJsonPath
+ * @returns {*}
+ */
+
+function callFingerprinter(configJsonPath, command) {
+    let thisFuture = new Future();
+    shell.exec('fingerprint ' + command + " " + configJsonPath, function (code, stdout, stderr) {
+        if (code != 0) {
+            throw new Error("Could not successfully call RDF Fingerprinter");
+        }
+        thisFuture.return({
+            code: code,
+            out: stdout,
+            err: stderr
+        });
+    });
+    return thisFuture.wait();
+}
+
+/**
+ *
+ * @param reportPath
+ */
+function addReportToCsvsCollection(reportPath) {
+    let fileData = fs.readFileSync(reportPath + ".pdf");
+    let fileRef = CsvsCollectionSyncWrite(fileData, {
+        fileName: reportPath + ".pdf",
+        type: 'application/pdf',
+    });
+    return fileRef;
+}

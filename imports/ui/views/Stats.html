@@ -1,0 +1,31 @@
+<template name="Stats">
+    <div class="container-fluid">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Descriptive statistical report</h3>
+                </div>
+                <div class="panel-body">
+                    {{#autoForm schema=statsSchema id="statsForm"}}
+                        {{> afQuickField name="alphaTitle" defaultValue="Dataset Alpha"}}
+                        {{> afQuickField name="alphaDescription" defaultValue="Description of the dataset Alpha"}}
+                        {{> afQuickField id="alphaFile" name="alphaFile" type="file"}}
+                        {{> afQuickField name="alphaFilePath" value = currentAlphaFilePath type="hidden"}}
+                        <button id="formSubmitButton" type="submit" class="btn btn-primary">Generate Report</button>
+                    {{/autoForm}}
+                </div>
+            </div>
+            {{#if reportReference}}
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    The Report is available at this
+                    <a class="alert-link" id="report-link"
+                       href="{{reportReference.link}}?download=true"
+                       download="{{reportReference.name}}" target="_blank">
+                        {{reportReference.name}}</a>.
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</template>

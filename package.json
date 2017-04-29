@@ -1,31 +1,31 @@
 {
-  "name": "fingerprinter-ui(meteor)",
-  "description": "The wrapper around the RDF Fingerprinter",
-  "author": "Eugeniu Costetchi",
-  "homepage": "https://github.com/costezki/fingerprinter-ui",
-  "license": "GPL3",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/costezki/fingerprinter-ui.git"
-  },
-  "private": false,
-  "scripts": {
-    "start": "meteor run --settings settings.json",
-    "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings settings.json"
-  },
-  "dependencies": {
-    "babel-polyfill": "~6.23.0",
-    "babel-runtime": "^6.23.0",
-    "expand-home-dir": "0.0.3",
-    "fibers": "^1.0.15",
-    "meteor-node-stubs": "~0.2.6",
-    "mkdirp": "^0.5.1",
-    "node-uuid": "^1.4.8",
-    "python-shell": "^0.4.0",
-    "shelljs": "~0.7.7",
-    "simpl-schema": "^0.2.3"
-  },
-  "devDependencies": {
-    "username": "^2.3.0"
-  }
+    "name": "fingerprinter-ui(meteor)",
+    "description": "The wrapper around the RDF Fingerprinter",
+    "author": "Eugeniu Costetchi",
+    "homepage": "https://github.com/costezki/fingerprinter-ui",
+    "license": "GPL3",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/costezki/fingerprinter-ui.git"
+    },
+    "private": false,
+    "scripts": {
+        "start": "meteor run --settings settings.json",
+        "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings settings.json"
+    },
+    "dependencies": {
+        "babel-polyfill": "~6.23.0",
+        "babel-runtime": "^6.23.0",
+        "expand-home-dir": "0.0.3",
+        "fibers": "^1.0.15",
+        "meteor-node-stubs": "~0.2.6",
+        "mkdirp": "^0.5.1",
+        "node-uuid": "^1.4.8",
+        "python-shell": "^0.4.0",
+        "shelljs": "~0.7.7",
+        "simpl-schema": "^0.2.3"
+    },
+    "devDependencies": {
+        "username": "^2.3.0"
+    }
 }

@@ -1,15 +1,9 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 
-// let uploads = expandHomeDir(Meteor.settings.path.uploads);
-// console.log( JSON.stringify(Meteor.settings) );
- let uploads = Meteor.settings.public.path.uploads;
-// let uploads = "/uploads";
-let reports = Meteor.settings.public.path.reports;
-// let reports = Meteor.settings.path.reports;
-// let reports = "/reports";
+let uploads = Meteor.settings.public.path.uploads;
 
 export const Csvs = new FilesCollection({
-    debug:true,
+    debug:false,
     storagePath: uploads,
     downloadRoute: "/downloads",
     collectionName: 'csvs',
@@ -24,13 +18,4 @@ export const Csvs = new FilesCollection({
             return 'Please upload csv, with size equal or less than 100MB';
         }
     }
-});
-
-export const GeneratedFile = new FilesCollection({
-    storagePath: uploads,
-    downloadRoute: "/downloads",
-    debug: false, //false in production
-    permissions: 777,
-    collectionName: 'generatedfile',
-    allowClientCode: false, // Disallow remove files from Client
 });

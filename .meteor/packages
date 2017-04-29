@@ -33,10 +33,11 @@ tanis:bootstrap-social
 fortawesome:fontawesome
 
 simple:reactive-method
-aldeed:autoform
+aldeed:autoform@6.0.0
 aldeed:collection2-core
-mdg:validated-method
 ostrio:files
+#ostrio:autoform-files
+mdg:validated-method
 
 #time for testing
 #xolvio:cucumber         # cucumber testing with .feature files

@@ -1,8 +1,5 @@
 import "./MainLayout.html";
 import "./Home.html";
+import "../views/Diff";
+import "../views/Stats";
 
-import "./Diff";
-import "./Stats";
-
-import "./UploadAlphaFile.html";
-import "./UploadBetaFile.html";
