@@ -41,10 +41,15 @@ mdg:validated-method
 
 #time for testing
 #xolvio:cucumber         # cucumber testing with .feature files
-practicalmeteor:mocha
-#canotto90:mocha-reporters   # attempt to change the strong white background of HTML mocha reporter, intended to work with mike:mocha
-practicalmeteor:chai
-#practicalmeteor:sinon
-http
 
-meteortoys:allthings # allows debugging Meteor application
+
+#canotto90:mocha-reporters   # attempt to change the strong white background of HTML mocha reporter, intended to work with mike:mocha
+#practicalmeteor:sinon
+
+#practicalmeteor:chai
+#practicalmeteor:mocha
+
+#http
+#cfs:http-methods
+
+#meteortoys:allthings # allows debugging Meteor application

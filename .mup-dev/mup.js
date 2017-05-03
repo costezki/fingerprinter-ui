@@ -15,8 +15,8 @@ module.exports = {
         name: 'fingerprinter',
         path: '../',
         volumes: { // lets you add docker volumes (optional)
-            "/reports": "/reports", // passed as '-v /host/path:/container/path' to the docker run command
-            "/uploads": "/uploads", // passed as '-v /host/path:/container/path' to the docker run command
+            "/home/lps/temp/reports": "/reports", // passed as '-v /host/path:/container/path' to the docker run command
+            "/home/lps/temp/uploads": "/uploads", // passed as '-v /host/path:/container/path' to the docker run command
         },
 
         servers: {

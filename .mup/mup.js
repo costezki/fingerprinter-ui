@@ -1,7 +1,7 @@
 module.exports = {
     servers: {
         one: {
-            host: 'ec2-35-158-0-136.eu-central-1.compute.amazonaws.com',
+            host: 'ec2-35-158-84-6.eu-central-1.compute.amazonaws.com',
             username: 'ubuntu',
             pem: '/home/lps/work/commonInstance/CommonInstance.pem',
             // password:
@@ -13,8 +13,8 @@ module.exports = {
         name: 'fingerprinter',
         path: '../',
         volumes: { // lets you add docker volumes (optional)
-            "/reports": "/reports", // passed as '-v /host/path:/container/path' to the docker run command
-            "/uploads": "/uploads", // passed as '-v /host/path:/container/path' to the docker run command
+            "/opt/resources/fingerprinter-ui/reports": "/reports", // passed as '-v /host/path:/container/path' to the docker run command
+            "/opt/resources/fingerprinter-ui/uploads": "/uploads", // passed as '-v /host/path:/container/path' to the docker run command
         },
 
         servers: {
