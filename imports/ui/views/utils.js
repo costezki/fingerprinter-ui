@@ -26,3 +26,13 @@ export function uploadFile(e, template, sessionVariable) {
         upload.start();
     }
 }
+
+function serverIdle()
+{
+
+}
+
+function serverWorking()
+{
+
+}

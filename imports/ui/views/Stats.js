@@ -8,6 +8,7 @@ import {uploadFile} from "./utils";
 Template.Stats.onCreated(function () {
     Meteor.subscribe('files.csvs.all');
     this.currentUpload = new ReactiveVar(false);
+    Session.set("reportReferenceFileId", null);
 });
 
 Template.Stats.helpers({

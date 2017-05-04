@@ -6,6 +6,7 @@ import {uploadFile} from "./utils";
 
 Template.Diff.onCreated(function () {
     this.currentUpload = new ReactiveVar(false);
+    Session.set("reportReferenceFileId", null);
 });
 
 Template.Diff.helpers({

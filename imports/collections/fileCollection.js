@@ -1,14 +1,14 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 
 let uploads = Meteor.settings.public.path.uploads;
-
+var _0774 = parseInt('0774', 8);
 export const Csvs = new FilesCollection({
     debug:false,
     storagePath: uploads,
     downloadRoute: "/downloads",
     collectionName: 'csvs',
-    permissions: 777,
-    allowClientCode: false, // Disallow remove files from Client
+    permissions: _0774,
+    parentDirPermissions: _0774,
     onBeforeUpload: function (file) {
         // Allow upload files under 100MB, and only in csv formats
         if (file.size <= 104857600 ) // && /csv/i.test(file.extension)
