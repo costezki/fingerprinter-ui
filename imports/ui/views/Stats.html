@@ -3,15 +3,16 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Descriptive statistical report</h3>
+                    <h3 class="panel-title"><i class="fa fa-spinner fa-spin fa-fw" id = "formSpinner"></i>Descriptive statistical report</h3>
                 </div>
                 <div class="panel-body">
                     {{#autoForm schema=statsSchema id="statsForm"}}
-                        {{> afQuickField name="alphaTitle" defaultValue="Dataset Alpha"}}
-                        {{> afQuickField name="alphaDescription" defaultValue="Description of the dataset Alpha"}}
+                        {{> afQuickField name="alphaTitle" defaultValue="Data set Alpha"}}
+                        {{> afQuickField name="alphaDescription" defaultValue="Description of the data set Alpha"}}
                         {{> afQuickField id="alphaFile" name="alphaFile" type="file"}}
                         {{> afQuickField name="alphaFilePath" value = currentAlphaFilePath type="hidden"}}
-                        <button id="formSubmitButton" type="submit" class="btn btn-primary">Generate Report</button>
+                        {{> warningWait }}
+                        <button id="formSubmitButton" type="submit" class="btn btn-primary center-block">Generate Report</button>
                     {{/autoForm}}
                 </div>
             </div>
