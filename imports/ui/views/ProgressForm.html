@@ -1,0 +1,62 @@
+<template name="ProgressForm">
+	{{#each progress}}
+		{{#if alphaFile}}
+			<h3>Uploading alpha file:
+				{{#if done alphaFile}}
+					<i class="fa fa-check fa-1x"></i>
+				{{else}}
+					<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+					<!-- {{alphaFile}} -->
+				{{/if}}
+			</h3>
+		{{/if}}
+		{{#if betaFile}}
+			<h3>Uploading beta file:
+				{{#if done betaFile}}
+					<i class="fa fa-check fa-1x"></i>
+				{{else}}
+					<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+					<!-- {{betaFile}} -->
+				{{/if}}
+			</h3>
+		{{/if}}
+		{{#if configJson}}
+			<h3>Collect infomation about file(s):
+				{{#if done configJson}}
+					<i class="fa fa-check fa-1x"></i>
+				{{else}}
+					<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+					<!-- {{configJson}} -->
+				{{/if}}
+			</h3>
+		{{/if}}
+		{{#if pythonCall}}
+			<h3>Generating report file:
+				{{#if done pythonCall}}
+					<i class="fa fa-check fa-1x"></i>
+				{{else}}
+					<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+					<!-- {{pythonCall}} -->
+				{{/if}}
+			</h3>
+		{{/if}}
+		{{#if createLink}}
+			<h3>Creating link to download report:
+				{{#if done createLink}}
+					<i class="fa fa-check fa-1x"></i>
+				{{else}}
+					<i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+					<!-- {{createLink}} -->
+				{{/if}}
+			</h3>
+		{{/if}}
+	{{/each}}
+	{{#if report}}
+		<div class="text-center">
+			<a href="{{report.link}}?download=true" id="download-report" download="{{report.name}}" class="btn btn-success btn-lg">
+				<i class="fa fa-download" aria-hidden="true"></i>
+				Your report file
+			</a>
+		</div>
+	{{/if}}
+</template>

@@ -1,63 +1,80 @@
-import "./Stats.html";
-import {Template} from 'meteor/templating';
-import {StatsReportParameters} from "../../collections/reportSchemas";
-import {Csvs} from "../../collections/fileCollection";
-import {uploadFile, serverIdle, serverWorking} from "./utils";
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { StatsReportParameters, FingerprinterProgress } from '/imports/collections/reportSchemas';
+import { uploadFiles, setFileDescription, updateProgress } from './utils';
 
+import './Stats.html';
+
+let uuid = require('node-uuid');
 
 Template.Stats.onCreated(function () {
-    Meteor.subscribe('files.csvs.all');
-    this.currentUpload = new ReactiveVar(false);
-    Session.set("reportReferenceFileId", null);
-});
+    Meteor.subscribe('fingerprinterProgress');
 
-Template.Stats.onRendered(function () {
-    serverIdle();
+    this.startedFingerprinter = new ReactiveVar( false );
 });
 
 Template.Stats.helpers({
     statsSchema(){
         return StatsReportParameters;
     },
-    currentUpload(){
-        return Template.instance().currentUpload.get();
+    startedProgress() {
+        return Template.instance().startedFingerprinter.get();
     },
-    currentAlphaFilePath(){
-        // return Template.instance().alphaFilePath.get();
-        return Session.get("alphaFilePath") || "";
-    },
-    reportReference(){
-        return Csvs.findOne({_id: Session.get("reportReferenceFileId")}, {});
+    scriptRunning() {
+        let progress = FingerprinterProgress.findOne({_id: Session.get('currentSession')});
+
+        if (progress !== void 0) {
+            if (progress.createLink == 'done') {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
     }
 });
 
 Template.Stats.events({
-    "submit #statsForm": function (event) {
+    'submit #statsForm': function (event, template) {
         event.preventDefault();
+        template.startedFingerprinter.set( true );
+
         let form = event.target;
-        const formData = {
-            alphaTitle: form.alphaTitle.value,
-            alphaDescription: form.alphaDescription.value,
-            alphaFile: form.alphaFile.value,
-            alphaFilePath: form.alphaFilePath.value
-        };
-        Meteor.call("generateStatsReport", formData, (err, res) => {
+        let sessionId = uuid.v4();
+
+        Session.set('currentSession', sessionId);
+
+        Meteor.call('startFingerprinterProgress', { sessionId, formName: 'stats'}, (err, res) => {
             if (err) console.error(err);
-            serverIdle();
-            Session.set("reportReferenceFileId",res.fileCursor._id);
+
+            let formData = {
+                alphaTitle: form.alphaTitle.value,
+                alphaDescription: form.alphaDescription.value,
+                alphaFile: 'alpha'
+            };
+
+            uploadFiles(form.alphaFile.files, template, function(path) {
+                formData.alphaFilePath = path;
+                formData.progressId = sessionId;
+
+                updateProgress(sessionId, {alphaFile: 'done'});
+
+                Meteor.call('generateStatsReport', formData, (err) => {
+                    if (err) console.error(err);
+                });
+            });
         });
     },
-    "change #alphaFile": (e, template) => {
-        uploadFile(e, template, "alphaFilePath");
+    'change #alphaFile': (e, template) => {
+        setFileDescription(e);
+    },
+    'click #download-report': (e) => {
+        FingerprinterProgress.remove({_id: Session.get('currentSession')}, (err) => {
+            if (err) throw new Error(err);
+            Session.set(undefined);
+            location.reload();
+        });
     }
 });
-
-let hooksObject = {
-    beginSubmit: function() {
-        Session.set("reportReferenceFileId",null);
-        serverWorking();
-    },
-    endSubmit: function() {
-    }
-};
-AutoForm.addHooks(["statsForm"],hooksObject);

@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
@@ -19,9 +21,13 @@ export const StatsReportParameters = new SimpleSchema({
         optional: false,
         label : "Data set CSV file (SPARQL query result set)"
     },
-    alphaFilePath:{
-        type:String,
-        optional: false,
+    alphaFilePath: {
+        type: String,
+        optional: true
+    },
+    progressId: {
+        type: String,
+        optional: true
     }
 }, { tracker: Tracker });
 
@@ -30,42 +36,48 @@ export const DiffReportParameters = new SimpleSchema({
         type: String,
         max: 150,
         optional: false,
-        label: "Alpha data set name"
+        label: 'Alpha data set name'
     },
     alphaDescription: {
         type: String,
         max: 300,
         optional: false,
-        label: "Alpha data set description"
+        label: 'Alpha data set description'
     },
     alphaFile: {
-        type:String,
+        type: String,
         optional: false,
-        label : "Alpha data set CSV file (SPARQL query result set)"
+        label: 'Alpha data set CSV file (SPARQL query result set)'
     },
-    alphaFilePath:{
-        type:String,
-        optional: false,
+    alphaFilePath: {
+        type: String,
+        optional: true
     },
     betaTitle: {
         type: String,
         max: 150,
         optional: false,
-        label : "Beta data set title"
+        label: 'Beta data set title'
     },
     betaDescription: {
         type: String,
         max: 300,
         optional: false,
-        label : "Beta data set description"
+        label: 'Beta data set description'
     },
     betaFile: {
-        type:String,
+        type: String,
         optional: false,
-        label : "Beta data set CSV file (SPARQL query result set)"
+        label: 'Beta data set CSV file (SPARQL query result set)'
     },
-    betaFilePath:{
-        type:String,
-        optional: false,
+    betaFilePath: {
+        type: String,
+        optional: true
+    },
+    progressId: {
+        type: String,
+        optional: true
     }
 }, { tracker: Tracker });
+
+export const FingerprinterProgress = new Mongo.Collection('fingerprinterProgress');

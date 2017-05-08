@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import "../imports/mdg/validatedMethods";
+import "/imports/mdg/validatedMethods";
 
 Meteor.startup(() => {
 

@@ -1,37 +1,62 @@
 <template name="Diff">
     <div class="container-fluid">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-spinner fa-spin fa-fw" id = "formSpinner"></i>Comparative statistical report</h3>
-                </div>
-                <div class="panel-body">
-                    {{#autoForm schema=diffSchema id="diffForm"}}
-                        {{> afQuickField name="alphaTitle" defaultValue="Data set Alpha"}}
-                        {{> afQuickField name="alphaDescription" defaultValue="Description of the data set Alpha"}}
-                        {{> afQuickField id="alphaFile" name="alphaFile" type="file"}}
-                        {{> afQuickField name="alphaFilePath" value = currentAlphaFilePath type="hidden"}}
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-primary">
+                    {{#if startedProgress}}
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {{#if scriptRunning}}
+                                    <i class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                                    Running <b>"Fingerprinter"</b> script
+                                {{else}}
+                                    Done!
+                                {{/if}}
+                            </h3>
+                        </div>
+                        <div class="panel-body" style="padding-left: 10px;">
+                            {{> ProgressForm}}
+                        </div>
+                    {{else}}
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Comparative statistical report</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{#autoForm schema=diffSchema id="diffForm"}}
+                                {{> afQuickField name="alphaTitle" defaultValue="Dataset Alpha"}}
+                                {{> afQuickField name="alphaDescription" defaultValue="Description of the dataset Alpha"}}
+                                {{> afQuickField id="alphaFile" name="alphaFile" type="file" class="filestyle" data-buttonname="btn-primary" data-buttontext="Select File" tabindex="-1"}}
+                                <div class="bootstrap-filestyle-alpha input-group">
+                                    <input type="text" class="form-control" placeholder="No file" disabled="">
+                                    <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                    <label for="alphaFile" class="btn btn-primary ">
+                                        <span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>
+                                        <span class="buttonText">Select File</span>
+                                     </label>
+                                    </span>
+                                </div>
+                                <span class="help-block"></span>
 
-                        {{> afQuickField name="betaTitle" defaultValue="Data set Beta"}}
-                        {{> afQuickField name="betaDescription" defaultValue="Description of the data set Beta"}}
-                        {{> afQuickField id="betaFile" name="betaFile" type="file"}}
-                        {{> afQuickField name="betaFilePath" value = currentBetaFilePath type="hidden"}}
-                        {{> warningWait }}
-                        <button id="formSubmitButton" type="submit" class="btn btn-primary center-block">Generate Report</button>
-                    {{/autoForm}}
+                                {{> afQuickField name="betaTitle" defaultValue="Dataset Beta"}}
+                                {{> afQuickField name="betaDescription" defaultValue="Description of the dataset Beta"}}
+                                {{> afQuickField id="betaFile" name="betaFile" type="file" class="filestyle" data-buttonname="btn-primary" data-buttontext="Select File" tabindex="-1"}}
+                                <div class="bootstrap-filestyle-beta input-group">
+                                    <input type="text" class="form-control" placeholder="No file" disabled="">
+                                    <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                    <label for="betaFile" class="btn btn-primary ">
+                                        <span class="icon-span-filestyle glyphicon glyphicon-folder-open"></span>
+                                        <span class="buttonText">Select File</span>
+                                     </label>
+                                    </span>
+                                </div>
+                                <span class="help-block"></span>
+
+                                <button id="formSubmitButton" type="submit" class="btn btn-primary">Generate Report</button>
+                            {{/autoForm}}
+                        </div>
+                    {{/if}}
                 </div>
             </div>
-            {{#if reportReference}}
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        The Report is available at this
-                        <a class="alert-link" id="report-link"
-                           href="{{reportReference.link}}?download=true"
-                           download="{{reportReference.name}}" target="_blank">
-                            {{reportReference.name}}</a>.
-                    </div>
-                </div>
-            {{/if}}
         </div>
     </div>
 </template>

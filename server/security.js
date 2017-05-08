@@ -1,6 +1,7 @@
-import {Csvs} from "../imports/collections/fileCollection";
+import { Csvs } from "/imports/collections/fileCollection";
+import { FingerprinterProgress } from "/imports/collections/reportSchemas";
 
-Csvs.allow({
+let allow = {
     insert: () => {
         return true;
     },
@@ -10,4 +11,7 @@ Csvs.allow({
     remove: () => {
         return true;
     },
-});
+};
+
+Csvs.allow(allow);
+FingerprinterProgress.allow(allow);
