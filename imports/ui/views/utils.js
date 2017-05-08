@@ -27,12 +27,14 @@ export function uploadFile(e, template, sessionVariable) {
     }
 }
 
-function serverIdle()
+export function serverIdle()
 {
-
+    $('#formSubmitButton').prop("disabled", false);
+    $('#formSpinner').hide();
 }
 
-function serverWorking()
+export function serverWorking()
 {
-
+    $('#formSubmitButton').prop("disabled", true);
+    $('#formSpinner').show();
 }

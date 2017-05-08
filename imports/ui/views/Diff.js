@@ -2,11 +2,16 @@ import "./Diff.html";
 import {Template} from 'meteor/templating';
 import {DiffReportParameters} from "../../collections/reportSchemas";
 import {Csvs} from "../../collections/fileCollection";
-import {uploadFile} from "./utils";
+import {uploadFile, serverIdle, serverWorking} from "./utils";
 
 Template.Diff.onCreated(function () {
+    Meteor.subscribe('files.csvs.all');
     this.currentUpload = new ReactiveVar(false);
     Session.set("reportReferenceFileId", null);
+});
+
+Template.Diff.onRendered(function () {
+    serverIdle();
 });
 
 Template.Diff.helpers({
@@ -44,7 +49,7 @@ Template.Diff.events({
         };
         Meteor.call("generateDiffReport", formData, (err, res) => {
             if (err) console.error(err);
-            console.log(res);
+            serverIdle();
             Session.set("reportReferenceFileId", res.fileCursor._id);
         });
     },
@@ -59,6 +64,7 @@ Template.Diff.events({
 let hooksObject = {
     beginSubmit: function () {
         Session.set("reportReferenceFileId", null);
+        serverWorking();
     },
     endSubmit: function () {
     }

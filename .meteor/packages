@@ -31,6 +31,7 @@ zenorocha:clipboard
 twbs:bootstrap
 tanis:bootstrap-social
 fortawesome:fontawesome
+jquery
 
 simple:reactive-method
 aldeed:autoform@6.0.0

@@ -2,13 +2,17 @@ import "./Stats.html";
 import {Template} from 'meteor/templating';
 import {StatsReportParameters} from "../../collections/reportSchemas";
 import {Csvs} from "../../collections/fileCollection";
-import {uploadFile} from "./utils";
+import {uploadFile, serverIdle, serverWorking} from "./utils";
 
 
 Template.Stats.onCreated(function () {
     Meteor.subscribe('files.csvs.all');
     this.currentUpload = new ReactiveVar(false);
     Session.set("reportReferenceFileId", null);
+});
+
+Template.Stats.onRendered(function () {
+    serverIdle();
 });
 
 Template.Stats.helpers({
@@ -20,7 +24,7 @@ Template.Stats.helpers({
     },
     currentAlphaFilePath(){
         // return Template.instance().alphaFilePath.get();
-        return Session.get("alphaFilePath") || "foo";
+        return Session.get("alphaFilePath") || "";
     },
     reportReference(){
         return Csvs.findOne({_id: Session.get("reportReferenceFileId")}, {});
@@ -39,7 +43,7 @@ Template.Stats.events({
         };
         Meteor.call("generateStatsReport", formData, (err, res) => {
             if (err) console.error(err);
-            console.log(res);
+            serverIdle();
             Session.set("reportReferenceFileId",res.fileCursor._id);
         });
     },
@@ -51,6 +55,7 @@ Template.Stats.events({
 let hooksObject = {
     beginSubmit: function() {
         Session.set("reportReferenceFileId",null);
+        serverWorking();
     },
     endSubmit: function() {
     }
