@@ -11,7 +11,7 @@ Template.ProgressForm.onCreated(function() {
 
 Template.ProgressForm.helpers({
 	progress() {
-		return FingerprinterProgress.find();
+		return FingerprinterProgress.find({_id:Session.get('currentSession')});
 	},
 	report() {
 		let report = Csvs.findOne({meta: {sessionId: Session.get('currentSession')}});

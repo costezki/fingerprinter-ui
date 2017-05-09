@@ -42,7 +42,7 @@
                         <h3 class="panel-title">SPARQL query</h3>
                     </div>
                     <div class="panel-body">
-							<pre class="pre-scrollable"><code>
+							<pre class="pre-scrollable"><code id="code">
 select distinct ?stype ?p ?ootype ?propType
 (count(distinct ?s) as ?scnt)
 (count(distinct ?o) as ?ocnt)
@@ -78,7 +78,7 @@ order by ?stype ?p ?ootype ?propType
             </div>
         </div>
     </div>
-    <script src="/javascripts/index-clipboard.js"></script>
+    <!--<script src="/javascripts/index-clipboard.js"></script>-->
     <main>
 
     </main>

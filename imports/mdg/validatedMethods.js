@@ -61,7 +61,7 @@ export const generateDiffReport = new ValidatedMethod({
             betaTitle, betaDescription, betaFile, betaFilePath
         }, progressId));
 
-        callFingerprinter(configPath, 'diff', progressId, reportFileName);
+        return callFingerprinter(configPath, 'diff', progressId, reportFileName);
     }
 });
 
