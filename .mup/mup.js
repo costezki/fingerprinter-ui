@@ -1,7 +1,7 @@
 module.exports = {
     servers: {
         one: {
-            host: 'ec2-35-158-84-6.eu-central-1.compute.amazonaws.com',
+            host: 'ec2-52-57-10-109.eu-central-1.compute.amazonaws.com',
             username: 'ubuntu',
             pem: '/home/lps/work/commonInstance/CommonInstance.pem',
             // password:
