@@ -1,21 +1,21 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { StatsReportParameters, FingerprinterProgress } from '/imports/collections/reportSchemas';
-import { uploadFiles, setFileDescription, updateProgress } from './utils';
+import {Meteor} from 'meteor/meteor';
+import {Template} from 'meteor/templating';
+import {ReactiveVar} from 'meteor/reactive-var';
+import {StatsReportParameters, FingerprinterProgress} from '/imports/collections/reportSchemas';
+import {uploadFiles, setFileDescription, updateProgress} from './utils';
 
 import './Stats.html';
 
-let uuid = require('node-uuid');
+let uuid = require('uuid');
 
 Template.Stats.onCreated(function () {
     Meteor.subscribe('fingerprinterProgress');
 
-    this.startedFingerprinter = new ReactiveVar( false );
+    this.startedFingerprinter = new ReactiveVar(false);
 });
 
 Template.Stats.helpers({
-    statsSchema(){
+    statsSchema() {
         return StatsReportParameters;
     },
     startedProgress() {
@@ -39,14 +39,14 @@ Template.Stats.helpers({
 Template.Stats.events({
     'submit #statsForm': function (event, template) {
         event.preventDefault();
-        template.startedFingerprinter.set( true );
+        template.startedFingerprinter.set(true);
 
         let form = event.target;
         let sessionId = uuid.v4();
 
         Session.set('currentSession', sessionId);
 
-        Meteor.call('startFingerprinterProgress', { sessionId, formName: 'stats'}, (err, res) => {
+        Meteor.call('startFingerprinterProgress', {sessionId, formName: 'stats'}, (err, res) => {
             if (err) console.error(err);
 
             let formData = {
@@ -55,7 +55,7 @@ Template.Stats.events({
                 alphaFile: 'alpha'
             };
 
-            uploadFiles(form.alphaFile.files, template, function(path) {
+            uploadFiles(form.alphaFile.files, template, function (path) {
                 formData.alphaFilePath = path;
                 formData.progressId = sessionId;
 

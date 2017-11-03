@@ -1,26 +1,26 @@
-import { ValidatedMethod } from 'meteor/mdg:validated-method';
-import { Csvs } from '/imports/collections/fileCollection';
-import { StatsReportParameters, DiffReportParameters, FingerprinterProgress } from '/imports/collections/reportSchemas';
+import {ValidatedMethod} from 'meteor/mdg:validated-method';
+import {Csvs} from '/imports/collections/fileCollection';
+import {StatsReportParameters, DiffReportParameters, FingerprinterProgress} from '/imports/collections/reportSchemas';
 import SimpleSchema from 'simpl-schema';
 
 let fs = Npm.require('fs');
 let Future = Npm.require('fibers/future');
 let Fiber = Npm.require('fibers');
-let uuid = require('node-uuid');
+let uuid = require('uuid');
 let shell = require('shelljs');
 let path = require('path');
 
 /**
-* [startFingerprinterProgress description]
-* @type {ValidatedMethod}
-*/
+ * [startFingerprinterProgress description]
+ * @type {ValidatedMethod}
+ */
 export const startFingerprinterProgress = new ValidatedMethod({
     name: 'startFingerprinterProgress',
     validate: new SimpleSchema({
-        sessionId: { type: String },
-        formName: { type: String }
+        sessionId: {type: String},
+        formName: {type: String}
     }).validator(),
-    run({ sessionId, formName }) {
+    run({sessionId, formName}) {
         let progressObj = {
             _id: sessionId,
             alphaFile: '',
@@ -38,8 +38,9 @@ export const startFingerprinterProgress = new ValidatedMethod({
 
 export const updateFingerPrinterProgress = new ValidatedMethod({
     name: 'updateFingerPrinterProgress',
-    validate(args) {},
-    run({ progressId, step }) {
+    validate(args) {
+    },
+    run({progressId, step}) {
         FingerprinterProgress.update({_id: progressId}, {$set: step}, (err) => {
             if (err) throw new Error(err);
         });
@@ -47,15 +48,15 @@ export const updateFingerPrinterProgress = new ValidatedMethod({
 });
 
 /**
-*
-*/
+ *
+ */
 export const generateDiffReport = new ValidatedMethod({
     name: 'generateDiffReport',
     validate: DiffReportParameters.validator(),
     run({
-        alphaTitle, alphaDescription, alphaFile, alphaFilePath,
-        betaTitle, betaDescription, betaFile, betaFilePath, progressId
-    }) {
+            alphaTitle, alphaDescription, alphaFile, alphaFilePath,
+            betaTitle, betaDescription, betaFile, betaFilePath, progressId
+        }) {
         ({configPath, reportFileName} = generateConfigJSON({
             alphaTitle, alphaDescription, alphaFile, alphaFilePath,
             betaTitle, betaDescription, betaFile, betaFilePath
@@ -66,14 +67,14 @@ export const generateDiffReport = new ValidatedMethod({
 });
 
 /**
-*
-*/
+ *
+ */
 export const generateStatsReport = new ValidatedMethod({
     name: 'generateStatsReport',
     validate: StatsReportParameters.validator(),
     run({
-        alphaTitle, alphaDescription, alphaFile, alphaFilePath, progressId
-    }) {
+            alphaTitle, alphaDescription, alphaFile, alphaFilePath, progressId
+        }) {
         ({configPath, reportFileName} = generateConfigJSON({
             alphaTitle, alphaDescription, alphaFile, alphaFilePath
         }, progressId));
@@ -83,20 +84,20 @@ export const generateStatsReport = new ValidatedMethod({
 });
 
 /**
-*
-* @param alphaTitle
-* @param alphaDescription
-* @param alphaFilePath
-* @param betaTitle
-* @param betaDescription
-* @param betaFilePath
-* @returns {*}
-*/
+ *
+ * @param alphaTitle
+ * @param alphaDescription
+ * @param alphaFilePath
+ * @param betaTitle
+ * @param betaDescription
+ * @param betaFilePath
+ * @returns {*}
+ */
 function generateConfigJSON({
-    alphaTitle, alphaDescription, alphaFilePath,
-    betaTitle, betaDescription, betaFilePath
-}, progressId) {
-    updateProgress(progressId, { configJson: 'Starting to collect information about file(s) '});
+                                alphaTitle, alphaDescription, alphaFilePath,
+                                betaTitle, betaDescription, betaFilePath
+                            }, progressId) {
+    updateProgress(progressId, {configJson: 'Starting to collect information about file(s) '});
 
     let uploads = Meteor.settings.public.path.uploads;
     let configFileName = uploads + '/config_' + uuid.v4() + ".json";
@@ -125,31 +126,31 @@ function generateConfigJSON({
 }
 
 /**
-*
-* @param content
-* @param properties
-* @returns {*}
-*/
+ *
+ * @param content
+ * @param properties
+ * @returns {*}
+ */
 function CsvsCollectionSyncWrite(content, properties, progressId) {
     let thisFuture = new Future();
     Csvs.write(content, properties, (error, fileRef) => {
         if (error) throw error;
         thisFuture.return(fileRef);
-        updateProgress(progressId, { configJson: 'done'});
+        updateProgress(progressId, {configJson: 'done'});
     });
     return thisFuture.wait();
 }
 
 /**
-*
-* @param configJsonPath
-* @returns {*}
-*/
+ *
+ * @param configJsonPath
+ * @returns {*}
+ */
 
 function callFingerprinter(configJsonPath, command, progressId, reportPath) {
     let thisFuture = new Future();
-    return new Fiber(function() {
-        updateProgress(progressId, { pythonCall: 'Starting to generate report...'});
+    return new Fiber(function () {
+        updateProgress(progressId, {pythonCall: 'Starting to generate report...'});
 
         shell.exec('fingerprint ' + command + " " + configJsonPath, function (code, stdout, stderr) {
             if (code !== 0) {
@@ -164,21 +165,21 @@ function callFingerprinter(configJsonPath, command, progressId, reportPath) {
 
         thisFuture.wait();
 
-        updateProgress(progressId, { pythonCall: 'done'});
+        updateProgress(progressId, {pythonCall: 'done'});
 
-        updateProgress(progressId, { createLink: 'Creating link for downloading the report...'});
+        updateProgress(progressId, {createLink: 'Creating link for downloading the report...'});
 
         addReportToCsvsCollection(reportPath, progressId);
 
-        updateProgress(progressId, { createLink: 'done'});
+        updateProgress(progressId, {createLink: 'done'});
 
     }).run();
 }
 
 /**
-*
-* @param reportPath
-*/
+ *
+ * @param reportPath
+ */
 function addReportToCsvsCollection(reportPath, progressId) {
     let fileData = fs.readFileSync(reportPath + ".pdf");
     let fileRef = CsvsCollectionSyncWrite(fileData, {
@@ -192,7 +193,7 @@ function addReportToCsvsCollection(reportPath, progressId) {
 }
 
 function updateProgress(progressId, step) {
-    Meteor.call('updateFingerPrinterProgress', { progressId, step }, (err) => {
+    Meteor.call('updateFingerPrinterProgress', {progressId, step}, (err) => {
         if (err) console.error(err);
     });
 }

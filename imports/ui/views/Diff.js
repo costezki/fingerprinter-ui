@@ -1,21 +1,21 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-import { DiffReportParameters, FingerprinterProgress } from '/imports/collections/reportSchemas';
-import { uploadFiles, setFileDescription, updateProgress } from './utils';
+import {Meteor} from 'meteor/meteor';
+import {Template} from 'meteor/templating';
+import {ReactiveVar} from 'meteor/reactive-var';
+import {DiffReportParameters, FingerprinterProgress} from '/imports/collections/reportSchemas';
+import {uploadFiles, setFileDescription, updateProgress} from './utils';
 
 import './Diff.html';
 
-let uuid = require('node-uuid');
+let uuid = require('uuid');
 
 Template.Diff.onCreated(function () {
     Meteor.subscribe('fingerprinterProgress');
 
-    this.startedFingerprinter = new ReactiveVar( false );
+    this.startedFingerprinter = new ReactiveVar(false);
 });
 
 Template.Diff.helpers({
-    diffSchema(){
+    diffSchema() {
         return DiffReportParameters;
     },
     startedProgress() {
@@ -39,14 +39,14 @@ Template.Diff.helpers({
 Template.Diff.events({
     'submit #diffForm': function (event, template) {
         event.preventDefault();
-        template.startedFingerprinter.set( true );
+        template.startedFingerprinter.set(true);
 
         let form = event.target;
         let sessionId = uuid.v4();
 
         Session.set('currentSession', sessionId);
 
-        Meteor.call('startFingerprinterProgress', { sessionId, formName: 'stats'}, (err, res) => {
+        Meteor.call('startFingerprinterProgress', {sessionId, formName: 'stats'}, (err, res) => {
             if (err) console.error(err);
 
             let formData = {
@@ -59,12 +59,12 @@ Template.Diff.events({
                 betaFile: 'beta'
             };
 
-            uploadFiles(form.alphaFile.files, template, function(path) {
+            uploadFiles(form.alphaFile.files, template, function (path) {
                 formData.alphaFilePath = path;
 
                 updateProgress(sessionId, {alphaFile: 'done'});
 
-                uploadFiles(form.betaFile.files, template, function(path) {
+                uploadFiles(form.betaFile.files, template, function (path) {
                     formData.betaFilePath = path;
                     formData.progressId = sessionId;
 

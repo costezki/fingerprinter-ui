@@ -1,35 +1,36 @@
 {
-    "name": "fingerprinter-ui(meteor)",
-    "description": "The wrapper around the RDF Fingerprinter",
-    "author": "Eugeniu Costetchi",
-    "homepage": "https://github.com/costezki/fingerprinter-ui",
-    "license": "GPL-3.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/costezki/fingerprinter-ui.git"
-    },
-    "private": false,
-    "scripts": {
-        "start": "meteor run --settings .mup/settings.json",
-        "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings settings.json"
-    },
-    "dependencies": {
-        "babel-polyfill": "~6.26.0",
-        "babel-runtime": "^6.26.0",
-        "bcrypt": "^1.0.3",
-        "buffer": "^5.0.8",
-        "emitter": "0.0.5",
-        "expand-home-dir": "0.0.3",
-        "fibers": "^2.0.0",
-        "meteor-node-stubs": "~0.3.2",
-        "mkdirp": "^0.5.1",
-        "node-uuid": "^1.4.8",
-        "python-shell": "^0.4.0",
-        "shelljs": "~0.7.8",
-        "simpl-schema": "^0.3.2",
-        "velocity": "^0.7.2"
-    },
-    "devDependencies": {
-        "username": "^3.0.0"
-    }
+  "name": "fingerprinter-ui(meteor)",
+  "description": "The wrapper around the RDF Fingerprinter",
+  "author": "Eugeniu Costetchi",
+  "homepage": "https://github.com/costezki/fingerprinter-ui",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/costezki/fingerprinter-ui.git"
+  },
+  "private": false,
+  "scripts": {
+    "start": "meteor run --settings .mup/settings.json",
+    "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings settings.json"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "buffer": "^5.0.8",
+    "emitter": "^0.0.5",
+    "expand-home-dir": "^0.0.3",
+    "fibers": "^2.0.0",
+    "meteor-node-stubs": "^0.3.2",
+    "mkdirp": "^0.5.1",
+    "mongo-object": "^0.0.2",
+    "python-shell": "^0.4.0",
+    "shelljs": "^0.7.8",
+    "simpl-schema": "^0.3.2",
+    "uuid": "^3.1.0",
+    "velocity": "^0.7.2"
+  },
+  "devDependencies": {
+    "username": "^3.0.0"
+  }
 }
