@@ -3,12 +3,12 @@ import {Csvs} from '/imports/collections/fileCollection';
 import {StatsReportParameters, DiffReportParameters, FingerprinterProgress} from '/imports/collections/reportSchemas';
 import SimpleSchema from 'simpl-schema';
 
-let fs = Npm.require('fs');
-let Future = Npm.require('fibers/future');
-let Fiber = Npm.require('fibers');
-let uuid = require('uuid');
-let shell = require('shelljs');
-let path = require('path');
+const fs = Npm.require('fs');
+const Future = Npm.require('fibers/future');
+const Fiber = Npm.require('fibers');
+const uuid = require('uuid');
+const shell = require('shelljs');
+const path = require('path');
 
 /**
  * [startFingerprinterProgress description]
@@ -99,12 +99,12 @@ function generateConfigJSON({
                             }, progressId) {
     updateProgress(progressId, {configJson: 'Starting to collect information about file(s) '});
 
-    let uploads = Meteor.settings.public.path.uploads;
-    let configFileName = uploads + '/config_' + uuid.v4() + ".json";
-    let reportFileName = uploads + '/report_' + uuid.v4();
+    const uploads = Meteor.settings.public.path.uploads;
+    const configFileName = uploads + '/config_' + uuid.v4() + ".json";
+    const reportFileName = uploads + '/report_' + uuid.v4();
 
     //loading default content
-    let content = JSON.parse(Assets.getText('resources/defaultValues.json'));
+    const content = JSON.parse(Assets.getText('resources/defaultValues.json'));
 
     //setting fields
     content.output = reportFileName;
@@ -118,7 +118,7 @@ function generateConfigJSON({
     content.beta.description = betaDescription;
 
     //writing the file to disk
-    let fileRef = CsvsCollectionSyncWrite(JSON.stringify(content, null, 4), {
+    const fileRef = CsvsCollectionSyncWrite(JSON.stringify(content, null, 4), {
         fileName: configFileName,
         type: 'application/json'
     }, progressId);
@@ -132,7 +132,7 @@ function generateConfigJSON({
  * @returns {*}
  */
 function CsvsCollectionSyncWrite(content, properties, progressId) {
-    let thisFuture = new Future();
+    const thisFuture = new Future();
     Csvs.write(content, properties, (error, fileRef) => {
         if (error) throw error;
         thisFuture.return(fileRef);
@@ -148,7 +148,7 @@ function CsvsCollectionSyncWrite(content, properties, progressId) {
  */
 
 function callFingerprinter(configJsonPath, command, progressId, reportPath) {
-    let thisFuture = new Future();
+    const thisFuture = new Future();
     return new Fiber(function () {
         updateProgress(progressId, {pythonCall: 'Starting to generate report...'});
 
@@ -181,8 +181,8 @@ function callFingerprinter(configJsonPath, command, progressId, reportPath) {
  * @param reportPath
  */
 function addReportToCsvsCollection(reportPath, progressId) {
-    let fileData = fs.readFileSync(reportPath + ".pdf");
-    let fileRef = CsvsCollectionSyncWrite(fileData, {
+    const fileData = fs.readFileSync(reportPath + ".pdf");
+    const fileRef = CsvsCollectionSyncWrite(fileData, {
         meta: {
             sessionId: progressId
         },

@@ -1,17 +1,15 @@
-import {Meteor} from 'meteor/meteor';
-import {Template} from 'meteor/templating';
-import {ReactiveVar} from 'meteor/reactive-var';
 import {StatsReportParameters, FingerprinterProgress} from '/imports/collections/reportSchemas';
 import {uploadFiles, setFileDescription, updateProgress} from './utils';
 
 import './Stats.html';
 
-let uuid = require('uuid');
+const uuid = require('uuid');
 
 Template.Stats.onCreated(function () {
     Meteor.subscribe('fingerprinterProgress');
 
-    this.startedFingerprinter = new ReactiveVar(false);
+    this.startedFingerprinter = new ReactiveVar(void 0);
+    this.currentSession = new ReactiveVar(void 0);
 });
 
 Template.Stats.helpers({
@@ -22,16 +20,15 @@ Template.Stats.helpers({
         return Template.instance().startedFingerprinter.get();
     },
     scriptRunning() {
-        let progress = FingerprinterProgress.findOne({_id: Session.get('currentSession')});
+        const currentSession = Template.instance().currentSession.get();
+        if (currentSession !== void 0) {
+            const progress = FingerprinterProgress.findOne(currentSession);
 
-        if (progress !== void 0) {
-            if (progress.createLink == 'done') {
-                return false;
+            if (progress !== void 0) {
+                return progress.createLink !== 'done';
             } else {
                 return true;
             }
-        } else {
-            return true;
         }
     }
 });
@@ -41,12 +38,12 @@ Template.Stats.events({
         event.preventDefault();
         template.startedFingerprinter.set(true);
 
-        let form = event.target;
-        let sessionId = uuid.v4();
+        const form = event.target;
+        const sessionId = uuid.v4();
 
-        Session.set('currentSession', sessionId);
+        template.currentSession.set(sessionId);
 
-        Meteor.call('startFingerprinterProgress', {sessionId, formName: 'stats'}, (err, res) => {
+        Meteor.call('startFingerprinterProgress', {sessionId, formName: 'stats'}, (err) => {
             if (err) console.error(err);
 
             let formData = {
@@ -67,13 +64,15 @@ Template.Stats.events({
             });
         });
     },
-    'change #alphaFile': (e, template) => {
+    'change #alphaFile': (e) => {
         setFileDescription(e);
     },
-    'click #download-report': (e) => {
-        FingerprinterProgress.remove({_id: Session.get('currentSession')}, (err) => {
+    'click #download-report': (event, template) => {
+        FingerprinterProgress.remove(template.currentSession.get(), (err) => {
             if (err) throw new Error(err);
-            Session.set(undefined);
+
+            template.currentSession.set(void 0);
+
             location.reload();
         });
     }
