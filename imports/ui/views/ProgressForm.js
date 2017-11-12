@@ -5,14 +5,19 @@ import './ProgressForm.html';
 
 Template.ProgressForm.onCreated(function () {
     Meteor.subscribe('files.csvs.all');
+
+    const parentView = Blaze.currentView.parentView.parentView;
+    const parentInstance = parentView.templateInstance();
+    // replace parentVariable with the name of the instance variable
+    this.currentSession = new ReactiveVar(parentInstance.currentSession.get())
 });
 
 Template.ProgressForm.helpers({
     progress() {
-        return FingerprinterProgress.find(Template.instance().parent().currentSession.get());
+        return FingerprinterProgress.find(Template.instance().currentSession.get());
     },
     report() {
-        let report = Csvs.findOne({meta: {sessionId: Template.instance().parent().currentSession.get()}});
+        let report = Csvs.findOne({meta: {sessionId: Template.instance().currentSession.get()}});
         if (report !== void 0) return report;
     }
 });
