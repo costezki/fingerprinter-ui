@@ -39,7 +39,7 @@ aldeed:autoform@6.2.0
 aldeed:collection2-core
 aldeed:simple-schema
 materialize:materialize
-poetic:materialize-scss
+#poetic:materialize-scss
 mozfet:autoform-materialize
 mozfet:autoform-modals-materialize
 ostrio:files # Upload files via DDP, HTTP and WebRTC/DC. To server FS, AWS, GridFS, DropBox or Google Drive.

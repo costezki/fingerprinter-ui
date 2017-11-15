@@ -9,7 +9,7 @@ module.exports = {
         }
     },
 
-    meteor: {
+    app: {
         name: 'fingerprinter',
         path: '../',
         volumes: { // lets you add docker volumes (optional)
@@ -33,9 +33,6 @@ module.exports = {
 
         docker: {
             image: 'costezki/meteor-fingerprinter:latest',
-            // change to 'kadirahq/meteord' if your app is not using Meteor 1.4
-            //image: 'abernix/meteord:base',
-            // imagePort: 80, // (default: 80, some images EXPOSE different ports)
         },
 
         // This is the maximum time in seconds it will wait
@@ -46,7 +43,7 @@ module.exports = {
 
         // Show progress bar while uploading bundle to server
         // You might need to disable it on CI servers
-        enableUploadProgressBar: false
+        enableUploadProgressBar: true
     },
 
     mongo: {

@@ -1,36 +1,38 @@
 {
-  "name": "fingerprinter-ui(meteor)",
-  "description": "The wrapper around the RDF Fingerprinter",
-  "author": "Eugeniu Costetchi",
-  "homepage": "https://github.com/costezki/fingerprinter-ui",
-  "license": "GPL-3.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/costezki/fingerprinter-ui.git"
-  },
-  "private": false,
-  "scripts": {
-    "start": "meteor run --settings .mup/settings.json",
-    "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings settings.json"
-  },
-  "dependencies": {
-    "babel-polyfill": "*",
-    "babel-runtime": "*",
-    "bcrypt": "*",
-    "buffer": "*",
-    "emitter": "*",
-    "expand-home-dir": "^2.0.0",
-    "fibers": "*",
-    "meteor-node-stubs": "*",
-    "mkdirp": "*",
-    "mongo-object": "0.0.3",
-    "python-shell": "*",
-    "shelljs": "*",
-    "simpl-schema": "^0.4.0",
-    "uuid": "*",
-    "velocity": "*"
-  },
-  "devDependencies": {
-    "username": "*"
-  }
+    "name": "fingerprinter-ui(meteor)",
+    "description": "The wrapper around the RDF Fingerprinter",
+    "author": "Eugeniu Costetchi",
+    "homepage": "https://github.com/costezki/fingerprinter-ui",
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/costezki/fingerprinter-ui.git"
+    },
+    "private": false,
+    "scripts": {
+        "start": "meteor run --settings .mup/settings.json",
+        "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings settings.json"
+    },
+    "dependencies": {
+        "babel-polyfill": "*",
+        "babel-runtime": "*",
+        "bcrypt": "*",
+        "buffer": "*",
+        "emitter": "*",
+        "expand-home-dir": "^2.0.0",
+        "fibers": "*",
+        "meteor-node-stubs": "*",
+        "mkdirp": "*",
+        "mongo-object": "0.0.3",
+        "node-gyp": "*",
+        "node-sass": "*",
+        "python-shell": "*",
+        "shelljs": "*",
+        "simpl-schema": "^0.4.1",
+        "uuid": "*",
+        "velocity": "*"
+    },
+    "devDependencies": {
+        "username": "*"
+    }
 }
