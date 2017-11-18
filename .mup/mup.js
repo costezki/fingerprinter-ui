@@ -1,7 +1,7 @@
 module.exports = {
     servers: {
         one: {
-            host: 'ec2-52-57-10-109.eu-central-1.compute.amazonaws.com',
+            host: 'ec2-35-157-2-106.eu-central-1.compute.amazonaws.com',
             username: 'ubuntu',
             pem: '/home/lps/work/commonInstance/CommonInstance.pem',
             // password:
@@ -48,7 +48,7 @@ module.exports = {
 
     mongo: {
         port: 27017,
-        version: '3.4.1',
+        version: '3.4.10',
         servers: {
             one: {}
         }
