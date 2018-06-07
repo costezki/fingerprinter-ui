@@ -4,7 +4,7 @@ import {StatsReportParameters, DiffReportParameters} from "../collections/report
 
 let fs = Npm.require('fs');
 let Future = Npm.require('fibers/future');
-let uuid = require('node-uuid');
+let uuid = require('uuid');
 let shell = require('shelljs');
 let path = require('path');
 
