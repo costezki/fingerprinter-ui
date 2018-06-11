@@ -10,7 +10,7 @@
   },
   "private": false,
   "scripts": {
-    "start": "meteor run --settings ./.mup/settings.json",
+    "start": "meteor run --settings ./.mup-dev/settings.json",
     "test": "meteor test --driver-package practicalmeteor:mocha --port 3100 --settings ./mup/settings.json"
   },
   "dependencies": {
